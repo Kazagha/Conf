@@ -59,7 +59,7 @@ public class Conf
 	{
 		for(confData cd : confArray)
 		{
-			if(cd.getVar().equals(variable))
+			if(cd.getVar().equalsIgnoreCase(variable))
 			{
 				return true;
 			}
@@ -72,7 +72,7 @@ public class Conf
 		int index = -1;
 		for (int i = 0; i < confArray.size(); i++)
 		{
-			if(confArray.get(i).getVar().equals(variable))
+			if(confArray.get(i).getVar().equalsIgnoreCase(variable))
 			{
 				index = i;
 			}
