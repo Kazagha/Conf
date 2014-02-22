@@ -18,9 +18,6 @@ public class Conf
 		}
 		Scanner scan = new Scanner(fis);
 		
-		scan.hasNextLine();
-		scan.hasNextLine();
-		
 		while(scan.hasNextLine())
 		{
 			String [] line = scan.nextLine().split("=");
@@ -48,13 +45,32 @@ public class Conf
 	
 	public void setValue(String variable, String value)
 	{
+		if(this.contains(variable))
+		{
+			for(confData cd : confArray)
+			{
+				if(cd.getVar().equals(variable))
+				{
+					cd.setVal(value);
+					break;
+				}
+			}
+			System.out.println("done");
+		} else {
+			confArray.add(new confData(variable, value));
+		}
+	}
+	
+	public boolean contains(String variable)
+	{
 		for(confData cd : confArray)
 		{
 			if(cd.getVar().equals(variable))
 			{
-				cd.setVal(value);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	public class confData
@@ -83,6 +99,11 @@ public class Conf
 		public String getVal()
 		{
 			return this.value;
+		}
+		
+		public boolean isNull()
+		{
+			return this.value == null;
 		}
 		
 		//Setter Methods
