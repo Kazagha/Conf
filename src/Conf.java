@@ -45,20 +45,14 @@ public class Conf
 	
 	public void setValue(String variable, String value)
 	{
-		if(this.contains(variable))
+		int index = this.indexOf(variable);
+		
+		if(index != -1)
 		{
-			for(confData cd : confArray)
-			{
-				if(cd.getVar().equals(variable))
-				{
-					cd.setVal(value);
-					break;
-				}
-			}
-			System.out.println("done");
+			confArray.get(index).setVal(value);
 		} else {
 			confArray.add(new confData(variable, value));
-		}
+		}		
 	}
 	
 	public boolean contains(String variable)
@@ -131,6 +125,6 @@ public class Conf
 		Conf config = new Conf(new File("src\\example.conf"));
 		config.setValue("password", "1234");
 		config.setValue("Name", "Firstname");
-		System.out.println(config.getValue("username") + " - " + config.getValue("password"));
+		System.out.format(config.getValue("Name") + ": " + config.getValue("username") + " - " + config.getValue("password"));
 	}
 }
