@@ -73,6 +73,19 @@ public class Conf
 		return false;
 	}
 	
+	public int indexOf(String variable)
+	{
+		int index = -1;
+		for (int i = 0; i < confArray.size(); i++)
+		{
+			if(confArray.get(i).getVar().equals(variable))
+			{
+				index = i;
+			}
+		}
+		return index;
+	}
+	
 	public class confData
 	{
 		String variable;
@@ -117,6 +130,7 @@ public class Conf
 	{
 		Conf config = new Conf(new File("src\\example.conf"));
 		config.setValue("password", "1234");
+		config.setValue("Name", "Firstname");
 		System.out.println(config.getValue("username") + " - " + config.getValue("password"));
 	}
 }
