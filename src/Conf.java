@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Conf
 {
 	ArrayList<confData> confArray = new ArrayList<confData>();
+	Scanner scan;
 	
 	public Conf(File f)
 	{
@@ -16,7 +17,7 @@ public class Conf
 		} catch (FileNotFoundException e) {
 			System.out.println("Invalid File:" + f.getName());
 		}
-		Scanner scan = new Scanner(fis);
+		scan = new Scanner(fis);
 		
 		while(scan.hasNextLine())
 		{
@@ -53,6 +54,34 @@ public class Conf
 		} else {
 			confArray.add(new confData(variable, value));
 		}		
+	}
+	
+	public void prompt()
+	{
+		scan = new Scanner(System.in);
+	
+		for(confData cd : confArray)
+		{
+			if(cd.isNull())
+			{
+				System.out.println(cd.getVar() + ": ");
+				cd.setVal(scan.nextLine());
+			}
+		}
+		scan.close();
+	}
+	
+	public void prompt(String variable)
+	{
+		scan = new Scanner(System.in);
+		int index = this.indexOf(variable);
+		
+		if(index != -1)
+		{
+			confArray.get(index).setVal(scan.nextLine());
+		} else {
+			confArray.add(new confData(variable, scan.nextLine()));
+		}
 	}
 	
 	public boolean contains(String variable)
@@ -123,8 +152,9 @@ public class Conf
 	public static void main (String[] args)
 	{
 		Conf config = new Conf(new File("src\\example.conf"));
-		config.setValue("password", "1234");
-		config.setValue("Name", "Firstname");
-		System.out.format(config.getValue("Name") + ": " + config.getValue("username") + " - " + config.getValue("password"));
+		config.prompt();
+		config.setValue("username",  config.getValue("First Name") + "." + config.getValue("Last Name"));
+		System.out.println("Name: " + config.getValue("First Name") + " " + config.getValue("Last Name"));
+		System.out.println("Username: " + config.getValue("username"));
 	}
 }
