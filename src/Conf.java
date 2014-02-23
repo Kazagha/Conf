@@ -32,7 +32,7 @@ public class Conf
 		scan.close();
 	}
 	
-	public String getValue(String variable)
+	public String get(String variable)
 	{
 		for(confData cd : confArray)
 		{
@@ -44,7 +44,7 @@ public class Conf
 		return null;
 	}
 	
-	public void setValue(String variable, String value)
+	public void set(String variable, String value)
 	{
 		int index = this.indexOf(variable);
 		
@@ -154,8 +154,6 @@ public class Conf
 	{
 		Conf config = new Conf(new File("src\\example.conf"));
 		config.prompt();
-		config.setValue("username",  config.getValue("First Name") + "." + config.getValue("Last Name"));
-		System.out.println("Name: " + config.getValue("First Name") + " " + config.getValue("Last Name"));
-		System.out.println("Username: " + config.getValue("username"));
+		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
 	}
 }
