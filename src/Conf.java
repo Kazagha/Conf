@@ -82,6 +82,7 @@ public class Conf
 		} else {
 			confArray.add(new confData(variable, scan.nextLine()));
 		}
+		scan.close();
 	}
 	
 	public boolean contains(String variable)
