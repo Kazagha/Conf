@@ -1,6 +1,9 @@
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,9 +11,11 @@ public class Conf
 {
 	ArrayList<confData> confArray = new ArrayList<confData>();
 	Scanner scan;
+	File configFileName;
 	
 	public Conf(File f)
 	{
+		configFileName = f;
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(f);
@@ -110,6 +115,34 @@ public class Conf
 		return index;
 	}
 	
+	public void save()
+	{
+
+		String s = new String();
+		
+		for(confData cd : confArray)
+		{
+			s += String.format("%s=%s%n", cd.getVar(), cd.getVal());
+		}
+		
+		saveFile(s);
+	}
+	
+	public void saveFile(String confString)
+	{
+		try {
+			
+			FileOutputStream fos = new FileOutputStream(configFileName);
+			byte[] outputBytes = confString.getBytes();
+			
+			fos.write(outputBytes);
+			fos.flush();
+			fos.close();
+			} catch (IOException e) {
+			System.out.format("I/O Exception: %n %s", e.getMessage());
+			}
+	}
+	
 	public class confData
 	{
 		String variable;
@@ -155,5 +188,6 @@ public class Conf
 		Conf config = new Conf(new File("src\\example.conf"));
 		config.prompt();
 		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
+		config.save();
 	}
 }
