@@ -115,6 +115,20 @@ public class Conf
 		return index;
 	}
 	
+	public void nullValues(String [] variables)
+	{
+		for(confData cd : confArray)
+		{
+			for(String var : variables)
+			{
+				if(cd.getVar().equals(var))
+				{
+					cd.setVal(null);
+				}
+			}
+		}		
+	}
+	
 	public void save()
 	{
 
@@ -125,6 +139,22 @@ public class Conf
 			s += String.format("%s=%s%n", cd.getVar(), cd.getVal());
 		}
 		
+		saveFile(s);
+	}
+	
+	public void save(String[] variables)
+	{
+		String s = new String();
+		for(confData cd : confArray)
+		{
+			for(String var : variables)
+			{
+				if(cd.getVar().equals(var))
+				{
+					s += String.format("%s=%s%n", cd.getVar(), cd.getVal());
+				}
+			}
+		}
 		saveFile(s);
 	}
 	
@@ -168,7 +198,12 @@ public class Conf
 		
 		public String getVal()
 		{
-			return this.value;
+			if(this.value != null)
+			{
+				return this.value;
+			} else {
+				return "";
+			}
 		}
 		
 		public boolean isNull()
@@ -188,6 +223,7 @@ public class Conf
 		Conf config = new Conf(new File("src\\example.conf"));
 		config.prompt();
 		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
+		config.nullValues(new String[] {"Database"});
 		config.save();
 	}
 }
