@@ -37,6 +37,11 @@ public class Conf
 		scan.close();
 	}
 	
+	/**
+	 * Returns the value that matches the first occurrence of the variable
+	 * @param 	variable - String to search for
+	 * @return				Value that matches the variable
+	 */
 	public String get(String variable)
 	{
 		for(confData cd : confArray)
@@ -49,6 +54,15 @@ public class Conf
 		return null;
 	}
 	
+	/** 
+	 * Set variable-value combination.  <br>
+	 * This method will create a new variable if it doesn't exist.<br>
+	 * Use <code>set("variable", "value")</code> to overwrite existing value.<br>
+	 * Use <code>set("variable", null)</code> to create a blank value.<br>
+	 * @param 	variable - name of variable
+	 * @param 	value - new value
+	 * @see 				Prompt
+	 */
 	public void set(String variable, String value)
 	{
 		int index = this.indexOf(variable);
@@ -60,7 +74,10 @@ public class Conf
 			confArray.add(new confData(variable, value));
 		}		
 	}
-	
+
+	/**
+	 * Prompt user for all NULL values 
+	 */
 	public void prompt()
 	{
 		scan = new Scanner(System.in);
@@ -76,6 +93,11 @@ public class Conf
 		scan.close();
 	}
 	
+	/**
+	 * Prompt user for the value of the specified variable<br>
+	 * Create the specified variable if it doesn't exist
+	 * @param 	variable - the specified variable
+	 */
 	public void prompt(String variable)
 	{
 		scan = new Scanner(System.in);
@@ -90,6 +112,11 @@ public class Conf
 		scan.close();
 	}
 	
+	/**
+	 * Returns true if this contains the specified variable
+	 * @param 	variable - String to search for
+	 * @return	boolean		true if this contians the specified element
+	 */
 	public boolean contains(String variable)
 	{
 		for(confData cd : confArray)
@@ -102,6 +129,11 @@ public class Conf
 		return false;
 	}
 	
+	/**
+	 * Returns the index of the first occurrence of the specified variable.
+	 * @param 	variable - String to search for
+	 * @return				the index of the first occurrence of the variable
+	 */
 	public int indexOf(String variable)
 	{
 		int index = -1;
@@ -115,6 +147,10 @@ public class Conf
 		return index;
 	}
 	
+	/**
+	 * Null the values of the specified variables
+	 * @param - specified variables to blank 
+	 */
 	public void nullValues(String [] variables)
 	{
 		for(confData cd : confArray)
@@ -129,6 +165,9 @@ public class Conf
 		}		
 	}
 	
+	/**
+	 * Save all variables in the array
+	 */
 	public void save()
 	{
 
@@ -142,6 +181,10 @@ public class Conf
 		saveFile(s);
 	}
 	
+	/**
+	 * Save only the specified variables
+	 * @param - variables specified variables to save
+	 */
 	public void save(String[] variables)
 	{
 		String s = new String();
@@ -157,7 +200,12 @@ public class Conf
 		}
 		saveFile(s);
 	}
-	
+
+	/**
+	 * Overwrite the configuration file with the contents on the input String 
+	 * @param confString - Contents of the configuration file
+	 */
+
 	public void saveFile(String confString)
 	{
 		try {
@@ -220,7 +268,7 @@ public class Conf
 
 	public static void main (String[] args)
 	{
-		Conf config = new Conf(new File("src\\example.conf"));
+		Conf config = new Conf(new File("src\\example.conf"));	
 		config.prompt();
 		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
 		config.nullValues(new String[] {"Database"});
