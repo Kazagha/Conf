@@ -95,7 +95,7 @@ public class Conf
 	
 	/**
 	 * Prompt user for the value of the specified variable<br>
-	 * Create the specified variable if it doesn't exist
+	 * Create the variable if it doesn't exist
 	 * @param 	variable - the specified variable
 	 */
 	public void prompt(String variable)
@@ -113,9 +113,9 @@ public class Conf
 	}
 	
 	/**
-	 * Returns true if this contains the specified variable
+	 * Returns <code>true</code> if this contains the specified variable
 	 * @param 	variable - String to search for
-	 * @return	boolean		true if this contians the specified element
+	 * @return	Return <code>true</code> if this contains the specified element
 	 */
 	public boolean contains(String variable)
 	{
@@ -148,8 +148,8 @@ public class Conf
 	}
 	
 	/**
-	 * Null the values of the specified variables
-	 * @param - specified variables to blank 
+	 * <code>null</code> the values of the specified variables
+	 * @param variables in this will have their values set to <code>null</code>  
 	 */
 	public void nullValues(String [] variables)
 	{
@@ -166,7 +166,7 @@ public class Conf
 	}
 	
 	/**
-	 * Save all variables in the array
+	 * Save all variables in this to file
 	 */
 	public void save()
 	{
@@ -182,8 +182,8 @@ public class Conf
 	}
 	
 	/**
-	 * Save only the specified variables
-	 * @param - variables specified variables to save
+	 * Save specified variables to file
+	 * @param variables to save
 	 */
 	public void save(String[] variables)
 	{
@@ -202,10 +202,9 @@ public class Conf
 	}
 
 	/**
-	 * Overwrite the configuration file with the contents on the input String 
+	 * Overwrite the config file with contents of <code>confString</code>
 	 * @param confString - Contents of the configuration file
 	 */
-
 	public void saveFile(String confString)
 	{
 		try {
@@ -216,9 +215,9 @@ public class Conf
 			fos.write(outputBytes);
 			fos.flush();
 			fos.close();
-			} catch (IOException e) {
+		} catch (IOException e) {
 			System.out.format("I/O Exception: %n %s", e.getMessage());
-			}
+		}
 	}
 	
 	public class confData
@@ -238,12 +237,19 @@ public class Conf
 			this.value = null;
 		}
 		
-		//Getter Methods
+		/**
+		 * Return the variable name
+		 * @return The variable name of this 
+		 */
 		public String getVar()
 		{
 			return this.variable;
 		}
 		
+		/**
+		 * Return value or "" if value is <code>null</code>
+		 * @return The value of this
+		 */
 		public String getVal()
 		{
 			if(this.value != null)
@@ -254,12 +260,19 @@ public class Conf
 			}
 		}
 		
+		/**
+		 * Return <code>true</code> if this value is <code>null</code>
+		 * @return boolean <code>True</code> if <code>null</code>
+		 */
 		public boolean isNull()
 		{
 			return this.value == null;
 		}
 		
-		//Setter Methods
+		/**
+		 * Set this value to the specified value
+		 * @param val - Specified value
+		 */
 		public void setVal(String val)
 		{
 			this.value = val;
