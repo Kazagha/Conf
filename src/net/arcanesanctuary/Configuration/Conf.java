@@ -1,4 +1,4 @@
-package net.arcanesanctuary.Conf;
+package net.arcanesanctuary.Configuration;
 
 import java.io.Console;
 import java.io.File;
