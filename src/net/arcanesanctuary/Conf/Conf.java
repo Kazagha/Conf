@@ -1,3 +1,5 @@
+package net.arcanesanctuary.Conf;
+
 import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,8 +51,9 @@ public class Conf
 			if(cd.getVar().equals(variable))
 			{
 				return cd.getVal();
-			}
+			} 
 		}
+		System.out.println("Unable to find variable: " + variable);
 		return null;
 	}
 	
@@ -73,6 +76,18 @@ public class Conf
 		} else {
 			confArray.add(new confData(variable, value));
 		}		
+	}
+	
+	public void del(String variable)
+	{
+		int index = this.indexOf(variable);
+		
+		if(index != -1)
+		{
+			confArray.remove(index);	
+		} else {
+			System.out.println("Invalid Index");
+		}
 	}
 
 	/**
@@ -110,6 +125,13 @@ public class Conf
 			confArray.add(new confData(variable, scan.nextLine()));
 		}
 		scan.close();
+	}
+	
+	public void promptPassword()
+	{
+		Console cons = System.console();
+		String username = cons.readLine("User name: ");
+		char[] passwd = cons.readPassword("Password: ");
 	}
 	
 	/**
@@ -284,6 +306,7 @@ public class Conf
 		Conf config = new Conf(new File("src\\example.conf"));	
 		config.prompt();
 		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
+		config.promptPassword();
 		config.nullValues(new String[] {"Database"});
 		config.save();
 	}
