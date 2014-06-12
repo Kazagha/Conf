@@ -35,6 +35,13 @@ public class Conf
 		}
 	}
 	
+	/**
+	 * Load File <br> 
+	 * This method loads the specified file into <code> this</code><br>
+	 * If the file doesn't exist, throw FileNotFoundException
+	 * @param f - The specified File
+	 * @throws FileNotFoundException
+	 */
 	private void loadFile(File f) throws FileNotFoundException
 	{	
 		FileInputStream fis = new FileInputStream(f);
