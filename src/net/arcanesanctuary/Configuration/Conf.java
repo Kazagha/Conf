@@ -17,13 +17,28 @@ public class Conf
 	
 	public Conf(File f)
 	{
-		configFileName = f;
-		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream(f);
-		} catch (FileNotFoundException e) {
-			System.out.println("Invalid File:" + f.getName());
+		configFileName = f;	
+		
+		try{
+			//Check if the file exists
+			if(f.exists())
+			{
+				//Load the specified File
+				loadFile(f);
+			} else {
+				//Create the specified File (as there is nothing to load)
+				f.createNewFile();
+			}
+		} catch (IOException e) {
+			System.out.println("Invalid File: " + f.getName());
+			e.printStackTrace();
 		}
+	}
+	
+	private void loadFile(File f) throws FileNotFoundException
+	{	
+		FileInputStream fis = new FileInputStream(f);
+
 		scan = new Scanner(fis);
 		
 		while(scan.hasNextLine())
