@@ -78,6 +78,23 @@ public class Conf
 		}		
 	}
 	
+	/**
+	 * Set an array of Variables<br>
+	 * This method checks that all the specified variables<br>
+	 * exist in <code>this</code>, otherwise create the variable with a null value
+	 * @param variables - Specified array of variables
+	 */
+	public void set(String[] variables)
+	{
+		for(String var : variables)
+		{
+			if(! this.contains(var))
+			{
+				confArray.add(new confData(var));
+			}
+		}		
+	}
+	
 	public void del(String variable)
 	{
 		int index = this.indexOf(variable);
@@ -200,7 +217,7 @@ public class Conf
 			s += String.format("%s=%s%n", cd.getVar(), cd.getVal());
 		}
 		
-		saveFile(s);
+		writeToFile(s);
 	}
 	
 	/**
@@ -220,14 +237,14 @@ public class Conf
 				}
 			}
 		}
-		saveFile(s);
+		writeToFile(s);
 	}
 
 	/**
 	 * Overwrite the config file with contents of <code>confString</code>
 	 * @param confString - Contents of the configuration file
 	 */
-	public void saveFile(String confString)
+	public void writeToFile(String confString)
 	{
 		try {
 			
@@ -303,10 +320,10 @@ public class Conf
 
 	public static void main (String[] args)
 	{
-		Conf config = new Conf(new File("src\\example.conf"));	
+		Conf config = new Conf(new File(args[0]));	
 		config.prompt();
 		System.out.println("Name: " + config.get("First Name") + " " + config.get("Last Name"));
-		config.promptPassword();
+		//config.promptPassword();
 		config.nullValues(new String[] {"Database"});
 		config.save();
 	}
