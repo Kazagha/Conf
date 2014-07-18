@@ -101,12 +101,12 @@ public class Conf
 	}
 	
 	/**
-	 * Set an array of Variables<br>
-	 * This method checks that all the specified variables<br>
-	 * exist in <code>this</code>, otherwise create the variable with a null value
+	 * Add an array of Variables<br>
+	 * This method adds the specified variables that do not already <br> 
+	 * exist in <code>this</code>. Variables are created with a <code>null</code> value
 	 * @param variables - Specified array of variables
 	 */
-	public void set(String[] variables)
+	public void add(String[] variables)
 	{
 		for(String var : variables)
 		{
