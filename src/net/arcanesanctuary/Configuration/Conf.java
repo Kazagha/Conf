@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class Conf
 {
 	ArrayList<confData> confArray = new ArrayList<confData>();
@@ -164,6 +167,32 @@ public class Conf
 			confArray.add(new confData(variable, scan.nextLine()));
 		}
 		scan.close();
+	}
+	
+	public void promptJOptionPane()
+	{
+		ArrayList<Object> fieldsList = new ArrayList<Object>();
+		
+		// Collect fields into an array
+		for(confData cd : confArray)
+		{			
+			JTextField tempTextField = new JTextField(cd.getVal());
+			
+			fieldsList.add(cd.getVar());
+			fieldsList.add(tempTextField);
+		}
+		
+		// Prompt the user
+		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), "Select!", JOptionPane.OK_CANCEL_OPTION);
+		
+		// Print to screen the values
+		for(Object obj : fieldsList)
+		{
+			if(obj instanceof JTextField)
+			{
+				System.out.println(((JTextField) obj).getText());
+			}
+		}		
 	}
 	
 	public void promptPassword()
