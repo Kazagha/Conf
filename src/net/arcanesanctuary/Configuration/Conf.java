@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Conf
@@ -169,7 +170,7 @@ public class Conf
 		scan.close();
 	}
 	
-	public void promptJOptionPane()
+	public void promptJOptionPane(String title)
 	{
 		ArrayList<Object> fieldsList = new ArrayList<Object>();
 		
@@ -183,7 +184,7 @@ public class Conf
 		}
 		
 		// Prompt the user
-		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), "Select!", JOptionPane.OK_CANCEL_OPTION);
+		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
 		
 		// Print to screen the values
 		for(Object obj : fieldsList)
@@ -256,6 +257,21 @@ public class Conf
 	}
 	
 	/**
+	 * Set the specific variable to use a 'hidden' prompt 
+	 * @param variable - The specified variable
+	 */
+	public void setHiddenPrompt(String variable)
+	{
+		for(confData cd : confArray)
+		{
+			if(cd.getVar().equalsIgnoreCase(variable))
+			{
+				cd.setHidden(true);
+			}
+		}
+	}
+	
+	/**
 	 * Save all variables in this to file
 	 */
 	public void save()
@@ -314,6 +330,7 @@ public class Conf
 	{
 		String variable;
 		String value;
+		boolean hiddenPrompt;
 		
 		public confData(String var, String val)
 		{
@@ -366,6 +383,15 @@ public class Conf
 		public void setVal(String val)
 		{
 			this.value = val;
+		}
+		
+		/**
+		 * Hide user input when prompting for this value 
+		 * @param b - True to hide input
+		 */
+		public void setHidden(boolean b)
+		{
+			this.hiddenPrompt = b;
 		}
 	}
 
