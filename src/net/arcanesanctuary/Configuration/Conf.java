@@ -174,16 +174,22 @@ public class Conf
 	{
 		ArrayList<Object> fieldsList = new ArrayList<Object>();
 		
-		// Collect fields into an array
 		for(confData cd : confArray)
-		{			
+		{
 			JTextField tempTextField = new JTextField(cd.getVal());
 			
+			// If the prompt is hidden, use a JPasswordField
+			if(cd.isHidden())
+			{
+				tempTextField = new JPasswordField(cd.getVal());
+			}			
+			
+			// Load the variable and JTextField into the array
 			fieldsList.add(cd.getVar());
 			fieldsList.add(tempTextField);
 		}
 		
-		// Prompt the user
+		// Prompt the user for input
 		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
 		
 		// Print to screen the values
@@ -365,6 +371,15 @@ public class Conf
 			} else {
 				return "";
 			}
+		}
+		
+		/**
+		 * Return <code>true</code> the prompt is 'hidden'
+		 * @return boolean <code>true</code> if hidden.
+		 */
+		public boolean isHidden()
+		{
+			return this.hiddenPrompt;
 		}
 		
 		/**
