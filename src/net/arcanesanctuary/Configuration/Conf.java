@@ -121,15 +121,16 @@ public class Conf
 		}		
 	}
 	
-	public void del(String variable)
+	public void del(String[] variables)
 	{
-		int index = this.indexOf(variable);
-		
-		if(index != -1)
+		for(String var : variables)
 		{
-			confArray.remove(index);	
-		} else {
-			System.out.println("Invalid Index");
+			int index = this.indexOf(var);
+			
+			if(index != -1)
+			{
+				confArray.remove(index);	
+			} 
 		}
 	}
 
@@ -156,16 +157,20 @@ public class Conf
 	 * Create the variable if it doesn't exist
 	 * @param 	variable - the specified variable
 	 */
-	public void prompt(String variable)
+	public void prompt(String[] variables)
 	{
 		scan = new Scanner(System.in);
-		int index = this.indexOf(variable);
 		
-		if(index != -1)
+		for(String var : variables)
 		{
-			confArray.get(index).setVal(scan.nextLine());
-		} else {
-			confArray.add(new confData(variable, scan.nextLine()));
+			int index = this.indexOf(var);
+			
+			if(index != -1)
+			{
+				confArray.get(index).setVal(scan.nextLine());
+			} else {
+				confArray.add(new confData(var, scan.nextLine()));
+			}
 		}
 		scan.close();
 	}
@@ -231,7 +236,7 @@ public class Conf
 	 * @param 	variable - String to search for
 	 * @return				the index of the first occurrence of the variable
 	 */
-	public int indexOf(String variable)
+	private int indexOf(String variable)
 	{
 		int index = -1;
 		for (int i = 0; i < confArray.size(); i++)
@@ -266,13 +271,16 @@ public class Conf
 	 * Set the specific variable to use a 'hidden' prompt 
 	 * @param variable - The specified variable
 	 */
-	public void setHiddenPrompt(String variable)
+	public void setHiddenPrompt(String [] variables)
 	{
 		for(confData cd : confArray)
 		{
-			if(cd.getVar().equalsIgnoreCase(variable))
+			for(String var : variables)
 			{
-				cd.setHidden(true);
+				if(cd.getVar().equalsIgnoreCase(var))
+				{
+					cd.setHidden(true);
+				}
 			}
 		}
 	}
