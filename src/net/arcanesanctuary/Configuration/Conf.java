@@ -83,6 +83,18 @@ public class Conf
 		return null;
 	}
 	
+	public confData getConf(String variable)
+	{
+		for(confData cd : confArray)
+		{
+			if(cd.getVar().equals(variable))
+			{
+				return cd;
+			}
+		}
+		return null;
+	}
+	
 	/** 
 	 * Set variable-value combination.  <br>
 	 * This method will create a new variable if it doesn't exist.<br>
@@ -197,9 +209,15 @@ public class Conf
 		// Prompt the user for input
 		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
 		
+		String tempString = null;
 		// Print to screen the values
 		for(Object obj : fieldsList)
 		{
+			if(obj instanceof String)
+			{
+				System.out.println(obj.toString());
+				tempString = (String)obj;
+			}
 			if(obj instanceof JTextField)
 			{
 				System.out.println(((JTextField) obj).getText());
