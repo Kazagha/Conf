@@ -210,19 +210,16 @@ public class Conf
 		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
 		
 		String tempVariable = null;
-		// Print to screen the values
 		for(Object obj : fieldsList)
 		{
+			// Find the variable name
 			if(obj instanceof String)
 			{
-				System.out.println(obj.toString());
 				tempVariable = (String)obj;
 			}
+			// Set the variable's value
 			if(obj instanceof JTextField)
 			{
-				System.out.println(((JTextField) obj).getText());
-				JTextField tempJTextField = (JTextField) obj;
-				//this.getConf(tempVariable).setVal(tempJTextField.getText());
 				this.getConf(tempVariable).setVal(((JTextField) obj).getText());
 			}
 		}		
