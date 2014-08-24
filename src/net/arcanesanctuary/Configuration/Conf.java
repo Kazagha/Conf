@@ -209,18 +209,21 @@ public class Conf
 		// Prompt the user for input
 		JOptionPane.showConfirmDialog(null, fieldsList.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
 		
-		String tempString = null;
+		String tempVariable = null;
 		// Print to screen the values
 		for(Object obj : fieldsList)
 		{
 			if(obj instanceof String)
 			{
 				System.out.println(obj.toString());
-				tempString = (String)obj;
+				tempVariable = (String)obj;
 			}
 			if(obj instanceof JTextField)
 			{
 				System.out.println(((JTextField) obj).getText());
+				JTextField tempJTextField = (JTextField) obj;
+				//this.getConf(tempVariable).setVal(tempJTextField.getText());
+				this.getConf(tempVariable).setVal(((JTextField) obj).getText());
 			}
 		}		
 	}
