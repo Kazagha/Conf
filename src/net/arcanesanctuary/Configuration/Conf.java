@@ -262,6 +262,7 @@ public class Conf
 			if(confArray.get(i).getVar().equalsIgnoreCase(variable))
 			{
 				index = i;
+				break;
 			}
 		}
 		return index;
