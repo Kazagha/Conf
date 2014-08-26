@@ -187,23 +187,35 @@ public class Conf
 		scan.close();
 	}
 	
-	public void promptJOptionPane(String title)
+	/**
+	 * Prompt the user for the specified variables using a JOptionPane
+	 * @param title - The title of the prompt window
+	 * @param variables - The specified variables to prompt for.  
+	 */
+	public void promptJOptionPane(String title, String[] variables)
 	{
 		ArrayList<Object> fieldsList = new ArrayList<Object>();
 		
-		for(confData cd : confArray)
+		for(String var : variables)
 		{
-			JTextField tempTextField = new JTextField(cd.getVal());
+			confData cd = null;
+			cd = this.getConf(var);
 			
-			// If the prompt is hidden, use a JPasswordField
-			if(cd.isHidden())
+			if(cd != null)
 			{
-				tempTextField = new JPasswordField(cd.getVal());
-			}			
-			
-			// Load the variable and JTextField into the array
-			fieldsList.add(cd.getVar());
-			fieldsList.add(tempTextField);
+				JTextField tempTextField = new JTextField(cd.getVal());
+				
+				// If the prompt is hidden, use a JPasswordField
+				if(cd.isHidden())
+				{
+					tempTextField = new JPasswordField(cd.getVal());
+				}			
+				
+				// Load the variable and JTextField into the array
+				fieldsList.add(cd.getVar());
+				fieldsList.add(tempTextField);
+			}
+			//TODO: If the value is null, create it. 
 		}
 		
 		// Prompt the user for input
@@ -223,13 +235,6 @@ public class Conf
 				this.getConf(tempVariable).setVal(((JTextField) obj).getText());
 			}
 		}		
-	}
-	
-	public void promptPassword()
-	{
-		Console cons = System.console();
-		String username = cons.readLine("User name: ");
-		char[] passwd = cons.readPassword("Password: ");
 	}
 	
 	/**
