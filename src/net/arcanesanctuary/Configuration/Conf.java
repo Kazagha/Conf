@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 public class Conf
 {
-	ArrayList<confData> confArray = new ArrayList<confData>();
+	ArrayList<ConfData> confArray = new ArrayList<ConfData>();
 	Scanner scan;
 	File configFileName;
 	
@@ -57,9 +57,9 @@ public class Conf
 			String [] line = scan.nextLine().split("=");
 			if(line.length == 1)
 			{
-				confArray.add(new confData(line[0]));
+				confArray.add(new ConfData(line[0]));
 			} else if(line.length == 2){
-				confArray.add(new confData(line[0], line[1]));
+				confArray.add(new ConfData(line[0], line[1]));
 			}
 		}		
 		scan.close();
@@ -72,7 +72,7 @@ public class Conf
 	 */
 	public String get(String variable)
 	{
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			if(cd.getVar().equals(variable))
 			{
@@ -88,9 +88,9 @@ public class Conf
 	 * @param variable - String to search for
 	 * @return <code>ConfData</code> that matches the variable
 	 */
-	public confData getConf(String variable)
+	public ConfData getConf(String variable)
 	{
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			if(cd.getVar().equals(variable))
 			{
@@ -117,7 +117,7 @@ public class Conf
 		{
 			confArray.get(index).setVal(value);
 		} else {
-			confArray.add(new confData(variable, value));
+			confArray.add(new ConfData(variable, value));
 		}		
 	}
 	
@@ -133,7 +133,7 @@ public class Conf
 		{
 			if(! this.contains(var))
 			{
-				confArray.add(new confData(var));
+				confArray.add(new ConfData(var));
 			}
 		}		
 	}
@@ -162,7 +162,7 @@ public class Conf
 	{
 		scan = new Scanner(System.in);
 	
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			if(cd.isNull())
 			{
@@ -190,7 +190,7 @@ public class Conf
 			{
 				confArray.get(index).setVal(scan.nextLine());
 			} else {
-				confArray.add(new confData(var, scan.nextLine()));
+				confArray.add(new ConfData(var, scan.nextLine()));
 			}
 		}
 		scan.close();
@@ -207,7 +207,7 @@ public class Conf
 		
 		for(String var : variables)
 		{
-			confData cd = null;
+			ConfData cd = null;
 			cd = this.getConf(var);
 			
 			if(cd != null)
@@ -253,7 +253,7 @@ public class Conf
 	 */
 	public boolean contains(String variable)
 	{
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			if(cd.getVar().equalsIgnoreCase(variable))
 			{
@@ -288,7 +288,7 @@ public class Conf
 	 */
 	public void nullValues(String [] variables)
 	{
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			for(String var : variables)
 			{
@@ -306,7 +306,7 @@ public class Conf
 	 */
 	public void setHiddenPrompt(String [] variables)
 	{
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			for(String var : variables)
 			{
@@ -326,7 +326,7 @@ public class Conf
 
 		String s = new String();
 		
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			s += String.format("%s=%s%n", cd.getVar(), cd.getVal());
 		}
@@ -341,7 +341,7 @@ public class Conf
 	public void save(String[] variables)
 	{
 		String s = new String();
-		for(confData cd : confArray)
+		for(ConfData cd : confArray)
 		{
 			for(String var : variables)
 			{
@@ -373,19 +373,19 @@ public class Conf
 		}
 	}
 	
-	public class confData
+	public class ConfData
 	{
 		String variable;
 		String value;
 		boolean hiddenPrompt;
 		
-		public confData(String var, String val)
+		public ConfData(String var, String val)
 		{
 			this.variable = var;
 			this.value = val;
 		}
 		
-		public confData(String var)
+		public ConfData(String var)
 		{
 			this.variable = var;
 			this.value = null;
