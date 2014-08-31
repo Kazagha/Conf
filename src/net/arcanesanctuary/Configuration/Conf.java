@@ -83,6 +83,11 @@ public class Conf
 		return null;
 	}
 	
+	/**
+	 * Return the ConfData element that matches the first occurence of the specified variable
+	 * @param variable - String to search for
+	 * @return <code>ConfData</code> that matches the variable
+	 */
 	public confData getConf(String variable)
 	{
 		for(confData cd : confArray)
@@ -133,6 +138,10 @@ public class Conf
 		}		
 	}
 	
+	/**
+	 * Delete the specified variables.
+	 * @param variables - The specified variables
+	 */
 	public void del(String[] variables)
 	{
 		for(String var : variables)
