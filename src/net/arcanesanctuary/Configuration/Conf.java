@@ -387,12 +387,14 @@ public class Conf
 			this.value = val;
 		}
 		
+		@Deprecated
 		public ConfData(String var, String val)
 		{
 			this.variable = var;
 			this.value = val;
 		}
 		
+		@Deprecated
 		public ConfData(String var)
 		{
 			this.variable = var;
@@ -449,9 +451,28 @@ public class Conf
 		 * Return <code>true</code> if this value is <code>null</code>
 		 * @return boolean <code>True</code> if <code>null</code>
 		 */
+		@Deprecated
 		public boolean isNull()
 		{
 			return this.value == null;
+		}
+		
+		/**
+		 * Return <code>true</code> if this value is <code>null</code>
+		 * @return boolean <code>True</code> if <code>null</code>
+		 * @return
+		 */
+		public boolean isNullVal() {
+			return this.value == null;
+		}
+		
+		/**
+		 * Return <code>true</code> if this description is <code>null</code>
+		 * @return boolean <code>True</code> if <code>null</code>
+		 * @return
+		 */
+		public boolean isNullDesc() {
+			return this.description == null;
 		}
 		
 		/**
