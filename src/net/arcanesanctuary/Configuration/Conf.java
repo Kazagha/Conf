@@ -476,12 +476,21 @@ public class Conf
 		}
 		
 		/**
-		 * Set this value to the specified value
+		 * Set this value to the specified String
 		 * @param val - Specified value
 		 */
 		public void setVal(String val)
 		{
 			this.value = val;
+		}
+		
+		/**
+		 * Set this description to the specified String 
+		 * @param desc - Specified value
+		 */
+		public void setDesc(String desc)
+		{
+			this.description = desc;
 		}
 		
 		/**
