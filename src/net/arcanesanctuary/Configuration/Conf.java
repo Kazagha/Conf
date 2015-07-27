@@ -377,7 +377,15 @@ public class Conf
 	{
 		String variable;
 		String value;
+		String description;
 		boolean hiddenPrompt;
+		
+		public ConfData(String var, String desc, String val) 
+		{
+			this.variable = var;
+			this.description = desc;
+			this.value = val;
+		}
 		
 		public ConfData(String var, String val)
 		{
@@ -398,6 +406,20 @@ public class Conf
 		public String getVar()
 		{
 			return this.variable;
+		}
+		
+		/**
+		 * Return the description of <code>this</code>
+		 * @return Detailed description of <code>this</code>
+		 */
+		public String getDesc()
+		{
+			if(this.description != null) 
+			{
+				return this.description;
+			} else  {
+				return "";
+			}
 		}
 		
 		/**
