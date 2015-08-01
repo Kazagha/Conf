@@ -21,11 +21,16 @@ public class ConfNode extends DefaultMutableTreeNode {
 	}
 	
 	public String get(String variable) {
-		for(int i = 0; i < this.getChildCount() - 1; i++) {
-			ConfData cd = this.getConfAt(i);
+		for(int i = 0; i < this.getChildCount(); i++) {
+			ConfNode cn = ((ConfNode) this.getChildAt(i));
+			ConfData cd = ((ConfData)cn.getUserObject());
 			
 			if(cd.getVar().equals(variable)) {
 				return cd.getVal();
+			}
+			
+			if(cn.getChildCount() > 0) {
+				cn.get(variable);
 			}
 		}
 		
@@ -54,17 +59,22 @@ public class ConfNode extends DefaultMutableTreeNode {
 	}
 	
 	public void del(String[] variables) {
-		for(String var : variables) {
-			int index = getIndexOf(var);
-			
-			if(index != -1) {
-				this.remove(index);
+		for(String var : variables) {		
+			for(int i = 0; i < this.getChildCount(); i++) {
+				ConfNode cn = ((ConfNode) this.getChildAt(i));
+				ConfData cd = ((ConfData)cn.getUserObject());
+				
+				if(cd.getVar().equals(var)) {
+					this.remove(cn);
+				}
 			}
 		}
 	}
 	
+	//TODO: Delete the current node; this.parent.remove(this)
+	
 	public int getIndexOf(String variable) {
-		for(int i = 0; i < this.getChildCount() - 1; i++) {
+		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfData cd = this.getConfAt(i);
 			
 			if(cd.getVar().equals(variable)) {
