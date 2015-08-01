@@ -30,5 +30,17 @@ public class ConfNode extends DefaultMutableTreeNode {
 		}
 		
 		return null;
-	}		
+	}
+	
+	public int getIndexOf(String variable) {
+		for(int i = 0; i < this.getChildCount() - 1; i++) {
+			ConfData cd = this.getConfAt(i);
+			
+			if(cd.getVar().equals(variable)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }
