@@ -1,25 +1,17 @@
 package net.arcanesanctuary.Configuration;
 
-import java.util.ArrayList;
-
 public class ConfData
 {
 	String variable;
-	Object value;
+	String value;
 	String description;
 	boolean hiddenPrompt;
-	
-	ConfData parent;
-	ArrayList<ConfData> children;
 	
 	public ConfData(String var, String desc, String val) 
 	{
 		this.variable = var;
 		this.description = desc;
 		this.value = val;
-		
-		this.parent = null;
-		this.children = new ArrayList<ConfData>();
 	}
 	
 	@Deprecated
@@ -65,32 +57,12 @@ public class ConfData
 	 */
 	public String getVal()
 	{
-		if(this.value != null && this.value instanceof String)
+		if(this.value != null)
 		{
-				return (String) this.value;
+			return this.value;
 		} else {
 			return "";
 		}
-	}
-	
-	public ConfData getParent() 
-	{
-		return this.parent;
-	}
-	
-	public ArrayList<ConfData> toConfDataArray()
-	{
-		return this.children;
-	}
-	
-	public ConfData getChildAt(int index) 
-	{
-		return children.get(index);
-	}
-	
-	public int childCount()
-	{
-		return children.size();
 	}
 	
 	/**
