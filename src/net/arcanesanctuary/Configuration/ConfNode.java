@@ -1,5 +1,7 @@
 package net.arcanesanctuary.Configuration;
 
+import java.util.Scanner;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class ConfNode extends DefaultMutableTreeNode {
@@ -73,6 +75,28 @@ public class ConfNode extends DefaultMutableTreeNode {
 	}
 	
 	//TODO: Delete the current node; this.parent.remove(this)
+	
+	public void prompt() {
+		Scanner scan = new Scanner(System.in);
+		
+		for(int i = 0; i < this.getChildCount(); i++) {
+			ConfNode cn = ((ConfNode) this.getChildAt(i));
+			ConfData cd = ((ConfData) cn.getUserObject());
+			
+			if(cd.isNullVal()) {
+				System.out.format("%s: ", cd.getVar());
+				cd.setVal(scan.nextLine());
+				cd.setVal("ChrisGreen");
+			}
+			
+			if(cn.getChildCount() > 0) {
+				cn.prompt();
+			}
+		}
+		
+		
+		scan.close();
+	}
 	
 	public int getIndexOf(String variable) {
 		for(int i = 0; i < this.getChildCount(); i++) {
