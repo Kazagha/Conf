@@ -50,8 +50,17 @@ public class ConfNode extends DefaultMutableTreeNode {
 				
 		} else {
 			this.add(new ConfNode(new ConfData(variable, desc, value)));
+		}		
+	}
+	
+	public void del(String[] variables) {
+		for(String var : variables) {
+			int index = getIndexOf(var);
+			
+			if(index != -1) {
+				this.remove(index);
+			}
 		}
-		
 	}
 	
 	public int getIndexOf(String variable) {
