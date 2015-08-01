@@ -19,4 +19,16 @@ public class ConfController {
 		Util u = new Util();
 		rootNode = u.getConfNodes();
 	}
+	
+	public String get(ConfNode node, String variable) {
+		for(int i = 0; i < node.getChildCount() - 1; i++) {
+			ConfData cd = node.getConfAt(i);
+			
+			if(cd.getVar().equals(variable)) {
+				return cd.getVal();
+			}
+		}		
+		
+		return null;
+	}
 }
