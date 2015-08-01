@@ -30,7 +30,7 @@ public class ConfNode extends DefaultMutableTreeNode {
 			}
 			
 			if(cn.getChildCount() > 0) {
-				cn.get(variable);
+				return cn.get(variable);
 			}
 		}
 		
@@ -66,6 +66,7 @@ public class ConfNode extends DefaultMutableTreeNode {
 				
 				if(cd.getVar().equals(var)) {
 					this.remove(cn);
+					break;
 				}
 			}
 		}
