@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class ConfNode extends DefaultMutableTreeNode {
 	
 	static Scanner scan;
+	static boolean scanInstantiated = false;
 	
 	public ConfNode(ConfData cd) {
 		this.userObject = cd;
@@ -83,7 +84,10 @@ public class ConfNode extends DefaultMutableTreeNode {
 	//TODO: Delete the current node; this.parent.remove(this)
 	
 	public void prompt() {
-		scan = new Scanner(System.in);
+		if(! scanInstantiated) {
+			scan = new Scanner(System.in);
+			scanInstantiated = true;
+		}
 		
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfNode cn = ((ConfNode) this.getChildAt(i));
