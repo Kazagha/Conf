@@ -6,6 +6,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class ConfNode extends DefaultMutableTreeNode {
 	
+	static Scanner scan;
+	
 	public ConfNode(ConfData cd) {
 		this.userObject = cd;
 	}
@@ -23,6 +25,7 @@ public class ConfNode extends DefaultMutableTreeNode {
 	}
 	
 	public String get(String variable) {
+		
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfNode cn = ((ConfNode) this.getChildAt(i));
 			ConfData cd = ((ConfData)cn.getUserObject());
@@ -32,7 +35,10 @@ public class ConfNode extends DefaultMutableTreeNode {
 			}
 			
 			if(cn.getChildCount() > 0) {
-				return cn.get(variable);
+				String returnStr = cn.get(variable);
+				if(returnStr != null) {
+					return returnStr;
+				}
 			}
 		}
 		
@@ -77,7 +83,7 @@ public class ConfNode extends DefaultMutableTreeNode {
 	//TODO: Delete the current node; this.parent.remove(this)
 	
 	public void prompt() {
-		Scanner scan = new Scanner(System.in);
+		scan = new Scanner(System.in);
 		
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfNode cn = ((ConfNode) this.getChildAt(i));
@@ -85,17 +91,15 @@ public class ConfNode extends DefaultMutableTreeNode {
 			
 			if(cd.isNullVal()) {
 				System.out.format("%s: ", cd.getVar());
-				cd.setVal(scan.nextLine());
-				cd.setVal("ChrisGreen");
+				cd.setVal(scan.nextLine());				
 			}
 			
 			if(cn.getChildCount() > 0) {
 				cn.prompt();
 			}
-		}
+		}		
 		
-		
-		scan.close();
+		//scan.close();
 	}
 	
 	public int getIndexOf(String variable) {
