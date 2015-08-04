@@ -89,7 +89,7 @@ public class ConfData
 	 * @return boolean <code>True</code> if <code>null</code>
 	 * @return
 	 */
-	public boolean isNullVal() {
+	public boolean nullVal() {
 		return this.value == null;
 	}
 	
@@ -98,7 +98,7 @@ public class ConfData
 	 * @return boolean <code>True</code> if <code>null</code>
 	 * @return
 	 */
-	public boolean isNullDesc() {
+	public boolean nullDesc() {
 		return this.description == null;
 	}
 	
