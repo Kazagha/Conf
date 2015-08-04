@@ -1,5 +1,6 @@
 package net.arcanesanctuary.Configuration;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -84,26 +85,49 @@ public class ConfNode extends DefaultMutableTreeNode {
 	//TODO: Delete the current node; this.parent.remove(this)
 	
 	public void prompt() {
+		this.prompt(false);
+	}
+	
+	public void prompt(boolean withDesc) {
 		if(! scanInstantiated) {
 			scan = new Scanner(System.in);
 			scanInstantiated = true;
 		}
 		
+		ArrayList<ConfData> array = new ArrayList<ConfData>();
+		this.getNulls(array);
+		
+		promptVarArray(array, withDesc);
+		
+		// Close the scanner
+		scan.close();
+		scanInstantiated = false;
+	}
+	
+	public void promptVarArray(ArrayList<ConfData> varArray, boolean withDesc) {
+		for(ConfData cd : varArray) {
+			if(withDesc == true && ! cd.nullDesc()) {
+				System.out.format("%s: ", cd.getDesc());				
+			} else {
+				System.out.format("%s: ", cd.getVar());
+			}
+			cd.setVal(scan.nextLine());
+		}
+	}
+	
+	private void getNulls(ArrayList<ConfData> array) {
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfNode cn = ((ConfNode) this.getChildAt(i));
 			ConfData cd = ((ConfData) cn.getUserObject());
-			
-			if(cd.isNullVal()) {
-				System.out.format("%s: ", cd.getVar());
-				cd.setVal(scan.nextLine());				
+						
+			if(cd.nullVal()) {
+				array.add(cd);			
 			}
 			
 			if(cn.getChildCount() > 0) {
-				cn.prompt();
+				cn.getNulls(array);
 			}
-		}		
-		
-		//scan.close();
+		}
 	}
 	
 	public int getIndexOf(String variable) {
