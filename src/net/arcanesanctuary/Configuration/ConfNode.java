@@ -85,28 +85,36 @@ public class ConfNode extends DefaultMutableTreeNode {
 	//TODO: Delete the current node; this.parent.remove(this)
 	
 	public void prompt() {
-		this.prompt(false);
+		this.prompt(false, new String[] { });
 	}
 	
 	public void prompt(boolean withDesc) {
+		this.prompt(withDesc, new String[]{ });
+	}
+	
+	public void prompt(boolean withDesc, String[] variables) {
 		if(! scanInstantiated) {
 			scan = new Scanner(System.in);
 			scanInstantiated = true;
 		}
 		
 		ArrayList<ConfData> array = new ArrayList<ConfData>();
-		this.getNulls(array);
+		if(variables.length > 0) {
+			this.getVarArray(array, variables);
+		} else {
+			this.getNullArray(array);
+		}
 		
-		promptVarArray(array, withDesc);
+		promptUserFor(withDesc, array);
 		
 		// Close the scanner
 		scan.close();
 		scanInstantiated = false;
 	}
 	
-	public void promptVarArray(ArrayList<ConfData> varArray, boolean withDesc) {
+	public void promptUserFor(boolean withDesc, ArrayList<ConfData> varArray) {
 		for(ConfData cd : varArray) {
-			if(withDesc == true && ! cd.nullDesc()) {
+			if(withDesc == true && ! cd.isDescNull()) {
 				System.out.format("%s: ", cd.getDesc());				
 			} else {
 				System.out.format("%s: ", cd.getVar());
@@ -115,17 +123,34 @@ public class ConfNode extends DefaultMutableTreeNode {
 		}
 	}
 	
-	private void getNulls(ArrayList<ConfData> array) {
+	private void getNullArray(ArrayList<ConfData> array) {
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfNode cn = ((ConfNode) this.getChildAt(i));
 			ConfData cd = ((ConfData) cn.getUserObject());
 						
-			if(cd.nullVal()) {
+			if(cd.isValNull()) {
 				array.add(cd);			
 			}
 			
 			if(cn.getChildCount() > 0) {
-				cn.getNulls(array);
+				cn.getNullArray(array);
+			}
+		}
+	}
+	
+	private void getVarArray(ArrayList<ConfData> array, String[] variables) {
+		for(String var : variables) {
+			for(int i = 0; i < this.getChildCount(); i++) {
+				ConfNode cn = ((ConfNode) this.getChildAt(i));
+				ConfData cd = ((ConfData) cn.getUserObject());
+							
+				if(cd.getVar().equals(var)) {
+					array.add(cd);	
+				}
+				
+				if(cn.getChildCount() > 0) {
+					cn.getVarArray(array, new String[]{ var });
+				}
 			}
 		}
 	}
