@@ -109,9 +109,18 @@ public class ConfNode extends DefaultMutableTreeNode {
 		promptUserFor(withDesc, array);
 		
 		// TODO: Close the scanner. 
-		// As this also closes the System.in Stream in prevents further input
+		// As this also closes the System.in Stream it prevents further input
 		//scan.close();		
 		//scanInstantiated = false;
+	}
+	
+	public void nullValues(String[] variables) {
+		ArrayList<ConfData> array = new ArrayList<ConfData>();
+		this.getVarArray(array, variables);
+		
+		for(ConfData cd : array) {
+			cd.setVal(null);
+		}
 	}
 	
 	public void promptUserFor(boolean withDesc, ArrayList<ConfData> varArray) {
