@@ -47,6 +47,12 @@ public class ConfNode extends DefaultMutableTreeNode {
 		return null;
 	}
 	
+	public void add(String[] variables) {
+		for(String var : variables) {
+			this.add(new ConfNode(var, null, null));
+		}
+	}
+	
 	public void set(String variable, String value) {
 		set(variable, null, value);
 	}
@@ -166,7 +172,11 @@ public class ConfNode extends DefaultMutableTreeNode {
 		}
 	}
 	
-	public int getIndexOf(String variable) {
+	public boolean contains(String variable) {
+		return (this.get(variable) != null);
+	}
+	
+	private int getIndexOf(String variable) {
 		for(int i = 0; i < this.getChildCount(); i++) {
 			ConfData cd = this.getConfAt(i);
 			
