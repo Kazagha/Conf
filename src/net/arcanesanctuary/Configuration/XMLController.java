@@ -18,6 +18,7 @@ import org.w3c.dom.*;
 public class XMLController {
 	
 	File filename;
+	Document doc;
 
 	public XMLController(File f) {
 		filename = f;
@@ -44,13 +45,11 @@ public class XMLController {
 			return;
 		}
 		
-		Document doc = docBuilder.newDocument();
-		Element rootElement = doc.createElement("root");
+		doc = docBuilder.newDocument();
+		Element rootElement = doc.createElement(cn.conf().getVar());
 		doc.appendChild(rootElement);
 		
-		Element environment = doc.createElement("Environment");
-		environment.appendChild(doc.createTextNode("TRAINING"));
-		rootElement.appendChild(environment);
+		this.buildDocument(rootElement, cn);
 		
 		DOMSource source = new DOMSource(doc);
 		
@@ -62,6 +61,37 @@ public class XMLController {
 			System.out.format("Transformer error%n %s%n%s", e.getMessage());
 			e.printStackTrace();
 		}		
+	}
+	
+	private void buildDocument(Element element, ConfNode node) {
+		for(int i = 0; i < node.getChildCount(); i++) {
+			ConfNode cn = ((ConfNode) node.getChildAt(i));
+			ConfData cd = ((ConfData) cn.conf());
+			
+			System.out.println(cd.getVar());
+			
+			Element e = doc.createElement(cd.getVar());
+			e.appendChild(doc.createTextNode(cd.getVal()));
+			
+			element.appendChild(e);
+			
+			/*
+			Attr desc = doc.createAttribute("desc");
+			desc.setValue(cd.getDesc());
+			e.setAttributeNode(desc);
+			
+			element.appendChild(element);
+			*/
+		}
+		
+		/*
+		Element rootElement = doc.createElement(cn.conf().getVar());
+		doc.appendChild(rootElement);
+		
+		Element environment = doc.createElement("Environment");
+		environment.appendChild(doc.createTextNode("TRAINING"));
+		rootElement.appendChild(environment);
+		*/
 	}
 	
 	public void load(ConfData cd) {
