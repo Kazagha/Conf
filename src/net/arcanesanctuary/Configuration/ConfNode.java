@@ -22,8 +22,8 @@ public class ConfNode extends DefaultMutableTreeNode {
 		return (ConfData) (((ConfNode) this.getChildAt(i)).getUserObject());
 	}
 	
-	public ConfData getConfData() {
-		return (ConfData) this.userObject;
+	public ConfData conf() {
+		return (ConfData) this.getUserObject();
 	}
 	
 	public String get(String variable) {
