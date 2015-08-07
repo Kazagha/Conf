@@ -1,5 +1,7 @@
 package net.arcanesanctuary.Configuration;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
 public class ConfData
 {
 	String variable;
@@ -9,7 +11,9 @@ public class ConfData
 	
 	public ConfData(String var, String desc, String val) 
 	{
-		this.variable = var;
+		// TODO: Regex replace invalid characters: _ & < > 
+		// TOOD: Camel case variable name with multiple words 
+		this.variable = var.replace(" ", "");
 		this.description = desc;
 		this.value = val;
 	}
