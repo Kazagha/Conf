@@ -73,10 +73,12 @@ public class XMLController {
 			Element e = doc.createElement(cd.getVar());
 			e.appendChild(doc.createTextNode(cd.getVal()));			
 			element.appendChild(e);
-					
-			Attr desc = doc.createAttribute("desc");
-			desc.setValue(cd.getDesc());
-			e.setAttributeNode(desc);
+			
+			if(! cd.isDescNull()) {
+				Attr desc = doc.createAttribute("desc");
+				desc.setValue(cd.getDesc());
+				e.setAttributeNode(desc);
+			}
 		}
 		
 		/*
