@@ -30,37 +30,32 @@ public class XMLController {
 		TransformerFactory tFactory = TransformerFactory.newInstance();
 		Transformer transformer = null;
 		
-		try {				
+		try {
+			
 			docBuilder = docFactory.newDocumentBuilder();
 			transformer = tFactory.newTransformer();			
 		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","4");
-		} catch(ParserConfigurationException e) {
-			System.out.format("Parser error%n %s%n%s", e.getMessage());
-			e.printStackTrace();
-			return;
-		} catch(TransformerConfigurationException e) {
-			System.out.format("Transformer error%n %s%n%s", e.getMessage());
-			e.printStackTrace();
-			return;
-		}
 		
-		doc = docBuilder.newDocument();
-		Element rootElement = doc.createElement(cn.conf().getVar());
-		doc.appendChild(rootElement);
-		
-		this.buildDocument(rootElement, cn);
-		
-		DOMSource source = new DOMSource(doc);
-		
-		StreamResult result = new StreamResult(this.filename);
+			doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement(cn.conf().getVar());
+			doc.appendChild(rootElement);
+			
+			this.buildDocument(rootElement, cn);
+			
+			DOMSource source = new DOMSource(doc);
+			
+			StreamResult result = new StreamResult(this.filename);
 				
-		try {
 			transformer.transform(source, result);
+			
 		} catch (TransformerException e) {
 			System.out.format("Transformer error%n %s%n%s", e.getMessage());
 			e.printStackTrace();
-		}		
+		} catch(ParserConfigurationException e) {
+			System.out.format("Parser error%n %s%n%s", e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	private void buildDocument(Element element, ConfNode node) {
