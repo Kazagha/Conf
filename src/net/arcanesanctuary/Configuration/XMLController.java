@@ -34,7 +34,7 @@ public class XMLController {
 			docBuilder = docFactory.newDocumentBuilder();
 			transformer = tFactory.newTransformer();			
 		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","2");
+		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","4");
 		} catch(ParserConfigurationException e) {
 			System.out.format("Parser error%n %s%n%s", e.getMessage());
 			e.printStackTrace();
@@ -68,8 +68,6 @@ public class XMLController {
 			ConfNode cn = ((ConfNode) node.getChildAt(i));
 			ConfData cd = ((ConfData) cn.conf());
 			
-			System.out.println(cd.getVar());
-			
 			Element e = doc.createElement(cd.getVar());
 			e.appendChild(doc.createTextNode(cd.getVal()));			
 			element.appendChild(e);
@@ -79,16 +77,11 @@ public class XMLController {
 				desc.setValue(cd.getDesc());
 				e.setAttributeNode(desc);
 			}
+			
+			if(cn.getChildCount() > 0) {
+				buildDocument(e, cn);
+			}
 		}
-		
-		/*
-		Element rootElement = doc.createElement(cn.conf().getVar());
-		doc.appendChild(rootElement);
-		
-		Element environment = doc.createElement("Environment");
-		environment.appendChild(doc.createTextNode("TRAINING"));
-		rootElement.appendChild(environment);
-		*/
 	}
 	
 	public void load(ConfData cd) {
