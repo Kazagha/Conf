@@ -1,6 +1,7 @@
 package net.arcanesanctuary.Configuration;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 public class XMLController {
 	
@@ -79,7 +81,22 @@ public class XMLController {
 		}
 	}
 	
-	public void load(ConfData cd) {
+	public ConfNode load() {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		ConfNode rootNode = new ConfNode("Test Node", null, null);
 		
+		try {
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(filename);
+		
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+		
+		return rootNode;
 	}
 }
