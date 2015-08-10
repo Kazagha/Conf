@@ -1,7 +1,5 @@
 package net.arcanesanctuary.Configuration;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
-
 public class ConfData
 {
 	String variable;
