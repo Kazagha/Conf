@@ -88,6 +88,17 @@ public class XMLController {
 		try {
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(filename);
+			
+			NodeList list = doc.getChildNodes().item(0).getChildNodes();
+			Node root = doc.getChildNodes().item(0);
+			
+			for(int i = 0; i < list.getLength(); i++) {
+				Node n = list.item(i);
+				if(n.getNodeType() == Node.ELEMENT_NODE) {
+					System.out.format("%n%s - %s%n", n.getNodeName(), n.getNodeValue());
+					getText(n);
+				}
+			}
 		
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -98,5 +109,30 @@ public class XMLController {
 		}
 		
 		return rootNode;
+	}
+	
+	
+	private void getText(Node node) {
+		NodeList list = node.getChildNodes();
+		
+		for(int i = 0; i < list.getLength(); i++) {
+			Node n = list.item(i);
+			//System.out.format("Node: %s%n", n.getNodeName());
+			
+			switch (n.getNodeType()) {
+			case Node.ATTRIBUTE_NODE:
+				System.out.format("    Att Node: %s%n", n.getNodeValue());
+				break;
+			case Node.ELEMENT_NODE:
+				System.out.format("    Ele Node: %s%n", n.getNodeValue());
+				break;			
+			case Node.TEXT_NODE: 
+			System.out.format("    Text Node: %s%n", n.getNodeValue());
+			break;
+			}
+
+			
+			getText(n);
+		}
 	}
 }
