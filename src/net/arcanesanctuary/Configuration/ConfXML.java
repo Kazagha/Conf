@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement
-@XmlType(propOrder={ "name", "desc", "value" })
+@XmlType(propOrder={ "name", "desc", "value", "childNodes" })
 public class ConfXML {
 
 	private String name;
@@ -40,8 +40,8 @@ public class ConfXML {
 		this.description = str;
 	}
 	
-	public void setChildNodes() {
-		
+	public void setChildNodes(ArrayList<ConfXML> nodes) {
+		this.childNodes = nodes;
 	}
 	
 	public String getName() {
