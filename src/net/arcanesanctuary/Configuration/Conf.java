@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlElement;
@@ -68,6 +69,7 @@ public class Conf {
 		return this.description;
 	}
 	
+	@XmlTransient
 	public Conf getParentNode() {
 		return this.parent;
 	}
@@ -98,5 +100,9 @@ public class Conf {
 		}
 		
 		return null;
+	}
+	
+	public void appendChild(Conf conf) {
+		this.childNodes.add(conf);
 	}
 }
