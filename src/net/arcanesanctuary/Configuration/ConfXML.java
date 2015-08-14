@@ -10,23 +10,23 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement(name = "conf")
-@XmlType(propOrder={ "name", "desc", "value", "variables" })
+@XmlType(propOrder={ "name", "desc", "value", "childNodes" })
 public class ConfXML {
 
 	private String name;
 	private String value;
 	private String description;
-	private ArrayList<ConfXML> variables;
+	private ArrayList<ConfXML> childNodes;
 	
 	public ConfXML() {
-		this.variables = new ArrayList<ConfXML>();
+		this.childNodes = new ArrayList<ConfXML>();
 	}
 	
-	public ConfXML(String name, String val, String desc) {
+	public ConfXML(String name, String desc, String val) {
 		this.name = name;
 		this.value = val;
 		this.description = desc;
-		this.variables = new ArrayList<ConfXML>();
+		this.childNodes = new ArrayList<ConfXML>();
 	}
 	
 	public void setName(String str) {
@@ -41,8 +41,8 @@ public class ConfXML {
 		this.description = str;
 	}
 	
-	public void setVariables(ArrayList<ConfXML> vars) {
-		this.variables = vars;
+	public void setChildNodes(ArrayList<ConfXML> vars) {
+		this.childNodes = vars;
 	}
 	
 	@XmlElement(name="name")
@@ -50,16 +50,18 @@ public class ConfXML {
 		return this.name;
 	}
 	
-	@XmlElement(name = "test")
+	@XmlElement(name = "value")
 	public String getValue() {
 		return this.value;
 	}	
 	
+	@XmlElement(name = "description")
 	public String getDesc() {
 		return this.description;
 	}
 		
-	public ArrayList<ConfXML> getVariables() {
-		return this.variables;
+	@XmlElement(name = "variable")
+	public ArrayList<ConfXML> getChildNodes() {
+		return this.childNodes;
 	}
 }
