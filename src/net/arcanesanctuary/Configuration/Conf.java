@@ -11,22 +11,25 @@ import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement(name = "conf")
 @XmlType(propOrder={ "name", "desc", "value", "childNodes" })
-public class ConfXML {
+public class Conf {
 
 	private String name;
 	private String value;
 	private String description;
-	private ArrayList<ConfXML> childNodes;
+	private ArrayList<Conf> childNodes;
 	
-	public ConfXML() {
-		this.childNodes = new ArrayList<ConfXML>();
+	public Conf() {
+		this.name = "";
+		this.value = "";
+		this.description = "";
+		this.childNodes = new ArrayList<Conf>();
 	}
 	
-	public ConfXML(String name, String desc, String val) {
+	public Conf(String name, String desc, String val) {
 		this.name = name;
 		this.value = val;
 		this.description = desc;
-		this.childNodes = new ArrayList<ConfXML>();
+		this.childNodes = new ArrayList<Conf>();
 	}
 	
 	public void setName(String str) {
@@ -41,7 +44,7 @@ public class ConfXML {
 		this.description = str;
 	}
 	
-	public void setChildNodes(ArrayList<ConfXML> vars) {
+	public void setChildNodes(ArrayList<Conf> vars) {
 		this.childNodes = vars;
 	}
 	
@@ -61,7 +64,7 @@ public class ConfXML {
 	}
 		
 	@XmlElement(name = "variable")
-	public ArrayList<ConfXML> getChildNodes() {
+	public ArrayList<Conf> getChildNodes() {
 		return this.childNodes;
 	}
 }

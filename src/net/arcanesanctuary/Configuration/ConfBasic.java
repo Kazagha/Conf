@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Conf
+public class ConfBasic
 {
 	ArrayList<ConfData> confArray = new ArrayList<ConfData>();
 	Scanner scan;
 	File configFileName;
 	
-	public Conf(File f)
+	public ConfBasic(File f)
 	{
 		configFileName = f;	
 		
