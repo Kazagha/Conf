@@ -45,7 +45,7 @@ public class Conf {
 		this.description = str;
 	}
 	
-	public void setParent(Conf c) {
+	public void setParentNode(Conf c) {
 		this.parent = c;
 	}
 	
@@ -68,12 +68,35 @@ public class Conf {
 		return this.description;
 	}
 	
-	public Conf getParent() {
+	public Conf getParentNode() {
 		return this.parent;
 	}
 		
 	@XmlElement(name = "variable")
 	public ArrayList<Conf> getChildNodes() {
 		return this.childNodes;
+	}
+	
+	public int getChildCound() {
+		return this.childNodes.size();
+	}
+	
+	public boolean hasChildNodes() {
+		return (! this.childNodes.isEmpty());
+	}
+	
+	public String get(String variable) {
+		for(Conf conf : this.getChildNodes()) {
+			
+			if(conf.getName().equals(variable)) {
+				return conf.getValue();
+			}
+			
+			if(conf.hasChildNodes()) {
+				return get(variable);
+			}
+		}
+		
+		return null;
 	}
 }
