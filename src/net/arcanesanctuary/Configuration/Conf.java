@@ -17,6 +17,7 @@ public class Conf {
 	private String value;
 	private String description;
 	private ArrayList<Conf> childNodes;
+	private Conf parent;
 	
 	public Conf() {
 		this.name = "";
@@ -44,6 +45,10 @@ public class Conf {
 		this.description = str;
 	}
 	
+	public void setParent(Conf c) {
+		this.parent = c;
+	}
+	
 	public void setChildNodes(ArrayList<Conf> vars) {
 		this.childNodes = vars;
 	}
@@ -61,6 +66,10 @@ public class Conf {
 	@XmlElement(name = "description")
 	public String getDesc() {
 		return this.description;
+	}
+	
+	public Conf getParent() {
+		return this.parent;
 	}
 		
 	@XmlElement(name = "variable")
