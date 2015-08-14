@@ -83,26 +83,33 @@ public class Conf {
 		return this.childNodes.size();
 	}
 	
+	public Conf getChildAt(int i) {
+		return this.childNodes.get(i);
+	}
+	
 	public boolean hasChildNodes() {
 		return (! this.childNodes.isEmpty());
 	}
 	
-	public String get(String variable) {
+	public Conf get(String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			
 			if(conf.getVariable().equals(variable)) {
-				return conf.getValue();
+				return conf;
 			}
 			
 			if(conf.hasChildNodes()) {
-				return get(variable);
+				return conf.get(variable);
 			}
 		}
-		
 		return null;
-	}
+	}	
 	
 	public void appendChild(Conf conf) {
 		this.childNodes.add(conf);
+	}
+	
+	public void set(String variable, String desc, String val) {
+		
 	}
 }
