@@ -7,25 +7,26 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlElement;
 
-@XmlRootElement
-@XmlType(propOrder={ "name", "desc", "value", "childNodes" })
+@XmlRootElement(name = "conf")
+@XmlType(propOrder={ "name", "desc", "value", "variables" })
 public class ConfXML {
 
 	private String name;
 	private String value;
 	private String description;
-	private ArrayList<ConfXML> childNodes;
+	private ArrayList<ConfXML> variables;
 	
 	public ConfXML() {
-		this.childNodes = new ArrayList<ConfXML>();
+		this.variables = new ArrayList<ConfXML>();
 	}
 	
 	public ConfXML(String name, String val, String desc) {
 		this.name = name;
 		this.value = val;
 		this.description = desc;
-		this.childNodes = new ArrayList<ConfXML>();
+		this.variables = new ArrayList<ConfXML>();
 	}
 	
 	public void setName(String str) {
@@ -40,14 +41,16 @@ public class ConfXML {
 		this.description = str;
 	}
 	
-	public void setChildNodes(ArrayList<ConfXML> nodes) {
-		this.childNodes = nodes;
+	public void setVariables(ArrayList<ConfXML> vars) {
+		this.variables = vars;
 	}
 	
+	@XmlElement(name="name")
 	public String getName() {
 		return this.name;
 	}
 	
+	@XmlElement(name = "test")
 	public String getValue() {
 		return this.value;
 	}	
@@ -56,7 +59,7 @@ public class ConfXML {
 		return this.description;
 	}
 		
-	public ArrayList<ConfXML> getChildNodes() {
-		return this.childNodes;
+	public ArrayList<ConfXML> getVariables() {
+		return this.variables;
 	}
 }
