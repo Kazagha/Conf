@@ -34,6 +34,20 @@ public class Conf {
 		this.childNodes = new ArrayList<Conf>();
 	}
 	
+	public void set(String variable, String description, String value) {
+		if(variable != null) {
+			this.setVar(variable);
+		}
+		
+		if(value != null) {
+			this.setVal(value);
+		}
+		
+		if(description != null) {
+			this.setDesc(description);
+		}		
+	}
+	
 	public void setVar(String str) {
 		this.var = str;
 	}
@@ -105,6 +119,14 @@ public class Conf {
 		return null;
 	}	
 	
+	public void del(String variable) {
+		Conf conf = this.get(variable);
+		
+		if(conf != null) {
+			this.childNodes.remove(conf);
+		}
+	}
+	
 	public void appendChild(Conf conf) {
 		this.childNodes.add(conf);
 	}
@@ -113,9 +135,5 @@ public class Conf {
 		Conf c = new Conf();		
 		this.childNodes.add(c);
 		return c;
-	}
-	
-	public void set(String variable, String desc, String val) {
-		
 	}
 }
