@@ -11,39 +11,39 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement(name = "conf")
-@XmlType(propOrder={ "variable", "desc", "value", "childNodes" })
+@XmlType(propOrder={ "var", "desc", "val", "childNodes" })
 public class Conf {
 
-	private String variable;
-	private String value;
-	private String description;
+	private String var;
+	private String val;
+	private String desc;
 	private ArrayList<Conf> childNodes;
 	private Conf parent;
 	
 	public Conf() {
-		this.variable = "";
-		this.value = "";
-		this.description = "";
+		this.var = "";
+		this.val = "";
+		this.desc = "";
 		this.childNodes = new ArrayList<Conf>();
 	}
 	
 	public Conf(String name, String desc, String val) {
-		this.variable = name;
-		this.value = val;
-		this.description = desc;
+		this.var = name;
+		this.val = val;
+		this.desc = desc;
 		this.childNodes = new ArrayList<Conf>();
 	}
 	
-	public void setVariable(String str) {
-		this.variable = str;
+	public void setVar(String str) {
+		this.var = str;
 	}
 	
-	public void setValue(String str) {
-		this.value = str;
+	public void setVal(String str) {
+		this.val = str;
 	}
 	
 	public void setDesc(String str) {
-		this.description = str;
+		this.desc = str;
 	}
 	
 	public void setParentNode(Conf c) {
@@ -55,18 +55,18 @@ public class Conf {
 	}
 	
 	@XmlElement(name="var")
-	public String getVariable() {
-		return this.variable;
+	public String getVar() {
+		return this.var;
 	}
 	
 	@XmlElement(name = "val")
-	public String getValue() {
-		return this.value;
+	public String getVal() {
+		return this.val;
 	}	
 	
 	@XmlElement(name = "desc")
 	public String getDesc() {
-		return this.description;
+		return this.desc;
 	}
 	
 	@XmlTransient
@@ -94,7 +94,7 @@ public class Conf {
 	public Conf get(String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			
-			if(conf.getVariable().equals(variable)) {
+			if(conf.getVar().equalsIgnoreCase(variable)) {
 				return conf;
 			}
 			
