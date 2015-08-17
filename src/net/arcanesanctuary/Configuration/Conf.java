@@ -109,6 +109,12 @@ public class Conf {
 		this.childNodes.add(conf);
 	}
 	
+	public Conf newChild() {
+		Conf c = new Conf();		
+		this.childNodes.add(c);
+		return c;
+	}
+	
 	public void set(String variable, String desc, String val) {
 		
 	}
