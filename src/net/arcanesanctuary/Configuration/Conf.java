@@ -119,7 +119,7 @@ public class Conf {
 		return null;
 	}	
 	
-	public void getAll(ArrayList<Conf> array, String variable) {
+	private void getAll(ArrayList<Conf> array, String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVar().equalsIgnoreCase(variable)) {
 				array.add(conf);
@@ -137,6 +137,18 @@ public class Conf {
 		}
 	}
 	
+	private void getAllNulls(ArrayList<Conf> array) {
+		for(Conf conf : this.getChildNodes()) {
+			if(conf.getVar() == null) {
+				array.add(conf);
+			}
+			
+			if(conf.hasChildNodes()) {
+				conf.getAllNulls(array);
+			}
+		}
+	}
+	
 	public void del(String variable) {
 		Conf conf = this.get(variable);
 		
@@ -145,13 +157,19 @@ public class Conf {
 		}
 	}
 	
+	public boolean contains(String variable) {
+		return false;
+	}
+	
 	public void appendChild(Conf conf) {
 		this.childNodes.add(conf);
+		conf.setParentNode(this);
 	}
 	
 	public Conf newChild() {
-		Conf c = new Conf();		
-		this.childNodes.add(c);
-		return c;
+		Conf conf = new Conf();		
+		this.childNodes.add(conf);
+		conf.setParentNode(this);
+		return conf;
 	}
 }
