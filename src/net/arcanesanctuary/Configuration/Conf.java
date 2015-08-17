@@ -119,6 +119,24 @@ public class Conf {
 		return null;
 	}	
 	
+	public void getAll(ArrayList<Conf> array, String variable) {
+		for(Conf conf : this.getChildNodes()) {
+			if(conf.getVar().equalsIgnoreCase(variable)) {
+				array.add(conf);
+			}
+			
+			if(conf.hasChildNodes()) {
+				conf.getAll(array, variable);
+			}
+		}
+	}
+	
+	public void getAll(ArrayList<Conf> array, String[] variables) {
+		for(String var : variables) {
+			this.getAll(array, var);
+		}
+	}
+	
 	public void del(String variable) {
 		Conf conf = this.get(variable);
 		
