@@ -65,8 +65,12 @@ public class Conf {
 		this.parent = c;
 	}
 	
-	public void setChildNodes(ArrayList<Conf> vars) {
-		this.childNodes = vars;
+	public void setChildNodes(ArrayList<Conf> array) {
+		this.childNodes = array;
+		
+		for(Conf conf : this.getChildNodes()) {
+			conf.setParentNode(this);
+		}
 	}
 	
 	@XmlElement(name="var")
@@ -180,7 +184,7 @@ public class Conf {
 		Conf conf = this.get(variable);
 		
 		if(conf != null) {
-			this.childNodes.remove(conf);
+			conf.getParentNode().getChildNodes().remove(conf);
 		}
 	}
 	
@@ -198,5 +202,5 @@ public class Conf {
 		this.childNodes.add(conf);
 		conf.setParentNode(this);
 		return conf;
-	}
+	}	
 }
