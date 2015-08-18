@@ -130,16 +130,20 @@ public class Conf {
 	public void prompt(boolean withDesc, String[] variables) {
 		Scanner scan = new Scanner(System.in);
 		
-		for(String var : variables) {
-			this.prompt(scan, withDesc, var);
-		}		
+		ArrayList<Conf> array = new ArrayList<Conf>();		
+		this.getAllNodes(array, variables);
+		
+		for(Conf conf : array) {
+			this.prompt(scan, withDesc, conf);
+		}	
 	}
 
-	private void prompt(Scanner scan, boolean withDesc, String variable) {
-		Conf conf = this.get(variable);	
+	//private void prompt(Scanner scan, boolean withDesc, String variable) {
+	private void prompt(Scanner scan, boolean withDesc, Conf conf) {
+		//Conf conf = this.get(variable);	
 
-		if(conf == null) 
-			return;
+		//if(conf == null) 
+		//	return;
 		
 		if(withDesc == true && !conf.getDesc().isEmpty()) {
 			System.out.format("%s: ", conf.getDesc());
@@ -150,7 +154,7 @@ public class Conf {
 		conf.setVal(scan.nextLine());	
 	}
 	
-	public void getAll(ArrayList<Conf> array, String[] variables) {
+	public void getAllNodes(ArrayList<Conf> array, String[] variables) {
 		for(String var : variables) {
 			this.getAll(array, var);
 		}
