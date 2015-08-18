@@ -158,7 +158,7 @@ public class Conf {
 	}
 	
 	public boolean contains(String variable) {
-		return false;
+		return (this.get(variable)) != null;
 	}
 	
 	public void appendChild(Conf conf) {
