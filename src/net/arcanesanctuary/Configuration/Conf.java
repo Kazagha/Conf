@@ -114,7 +114,10 @@ public class Conf {
 			}
 			
 			if(conf.hasChildNodes()) {
-				return conf.get(variable);
+				Conf childNode = conf.get(variable);
+				if(childNode != null) {
+					return childNode;
+				}
 			}
 		}
 		return null;
