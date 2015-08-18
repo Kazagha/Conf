@@ -2,6 +2,7 @@ package net.arcanesanctuary.Configuration;
 
 import java.util.ArrayList;
 import java.util.List; 
+import java.util.Scanner;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -117,7 +118,36 @@ public class Conf {
 			}
 		}
 		return null;
-	}	
+	}
+	
+	public void prompt(boolean withDesc, String[] variables) {
+		Scanner scan = new Scanner(System.in);
+		
+		for(String var : variables) {
+			this.prompt(scan, withDesc, var);
+		}		
+	}
+
+	private void prompt(Scanner scan, boolean withDesc, String variable) {
+		Conf conf = this.get(variable);	
+
+		if(conf == null) 
+			return;
+		
+		if(withDesc == true && !conf.getDesc().isEmpty()) {
+			System.out.format("%s: ", conf.getDesc());
+		} else {
+			System.out.format("%s:", conf.getVar());
+		}
+		
+		conf.setVal(scan.nextLine());	
+	}
+	
+	public void getAll(ArrayList<Conf> array, String[] variables) {
+		for(String var : variables) {
+			this.getAll(array, var);
+		}
+	}
 	
 	private void getAll(ArrayList<Conf> array, String variable) {
 		for(Conf conf : this.getChildNodes()) {
@@ -128,12 +158,6 @@ public class Conf {
 			if(conf.hasChildNodes()) {
 				conf.getAll(array, variable);
 			}
-		}
-	}
-	
-	public void getAll(ArrayList<Conf> array, String[] variables) {
-		for(String var : variables) {
-			this.getAll(array, var);
 		}
 	}
 	
