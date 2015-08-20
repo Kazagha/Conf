@@ -127,6 +127,17 @@ public class Conf {
 		return null;
 	}
 	
+	public void prompt(boolean withDesc) {
+		Scanner scan = new Scanner(System.in);
+		
+		ArrayList<Conf> array = new ArrayList<Conf>();		
+		this.getAllNulls(array);
+		
+		for(Conf conf : array) {
+			this.prompt(scan, withDesc, conf);
+		}
+	}
+	
 	public void prompt(boolean withDesc, String[] variables) {
 		Scanner scan = new Scanner(System.in);
 		
@@ -171,7 +182,7 @@ public class Conf {
 	
 	private void getAllNulls(ArrayList<Conf> array) {
 		for(Conf conf : this.getChildNodes()) {
-			if(conf.getVar() == null) {
+			if(conf.getVar() == null || conf.getVal().isEmpty()) {
 				array.add(conf);
 			}
 			
