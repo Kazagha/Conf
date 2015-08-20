@@ -131,7 +131,7 @@ public class Conf {
 		Scanner scan = new Scanner(System.in);
 		
 		ArrayList<Conf> array = new ArrayList<Conf>();		
-		this.getAllNulls(array);
+		this.getChildNulls(array);
 		
 		for(Conf conf : array) {
 			this.prompt(scan, withDesc, conf);
@@ -142,7 +142,7 @@ public class Conf {
 		Scanner scan = new Scanner(System.in);
 		
 		ArrayList<Conf> array = new ArrayList<Conf>();		
-		this.getAllNodes(array, variables);
+		this.getChildNodes(array, variables);
 		
 		for(Conf conf : array) {
 			this.prompt(scan, withDesc, conf);
@@ -162,33 +162,42 @@ public class Conf {
 		conf.setVal(scan.nextLine());	
 	}
 	
-	public void getAllNodes(ArrayList<Conf> array, String[] variables) {
+	public void getChildNodes(ArrayList<Conf> array, String[] variables) {
 		for(String var : variables) {
-			this.getAll(array, var);
+			this.getChildNodes(array, var);
 		}
 	}
 	
-	private void getAll(ArrayList<Conf> array, String variable) {
+	private void getChildNodes(ArrayList<Conf> array, String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVar().equalsIgnoreCase(variable)) {
 				array.add(conf);
 			}
 			
 			if(conf.hasChildNodes()) {
-				conf.getAll(array, variable);
+				conf.getChildNodes(array, variable);
 			}
 		}
 	}
 	
-	private void getAllNulls(ArrayList<Conf> array) {
+	private void getChildNulls(ArrayList<Conf> array) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVar() == null || conf.getVal().isEmpty()) {
 				array.add(conf);
 			}
 			
 			if(conf.hasChildNodes()) {
-				conf.getAllNulls(array);
+				conf.getChildNulls(array);
 			}
+		}
+	}
+	
+	public void setChildNulls(String[] variables) {
+		ArrayList<Conf> array = new ArrayList<Conf>();
+		this.getChildNodes(array, variables);
+		
+		for(Conf conf : array) {
+			conf.setVal(null);
 		}
 	}
 	
@@ -202,7 +211,7 @@ public class Conf {
 	
 	public void removeAllChildren(String[] variables) {
 		ArrayList<Conf> array = new ArrayList<Conf>();
-		this.getAllNodes(array, variables);
+		this.getChildNodes(array, variables);
 		
 		for(Conf conf : array) {
 			conf.getParentNode().getChildNodes().remove(conf);
