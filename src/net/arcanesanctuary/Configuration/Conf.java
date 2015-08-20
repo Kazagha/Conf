@@ -61,7 +61,7 @@ public class Conf {
 		this.desc = str;
 	}
 	
-	public void setParentNode(Conf c) {
+	private void setParentNode(Conf c) {
 		this.parent = c;
 	}
 	
@@ -98,7 +98,7 @@ public class Conf {
 		return this.childNodes;
 	}
 	
-	public int getChildCound() {
+	public int getChildCount() {
 		return this.childNodes.size();
 	}
 	
@@ -136,14 +136,11 @@ public class Conf {
 		for(Conf conf : array) {
 			this.prompt(scan, withDesc, conf);
 		}	
+		
+		//TODO: Close the Scanner without also closing System.in as this will prevent further input 
 	}
 
-	//private void prompt(Scanner scan, boolean withDesc, String variable) {
 	private void prompt(Scanner scan, boolean withDesc, Conf conf) {
-		//Conf conf = this.get(variable);	
-
-		//if(conf == null) 
-		//	return;
 		
 		if(withDesc == true && !conf.getDesc().isEmpty()) {
 			System.out.format("%s: ", conf.getDesc());
