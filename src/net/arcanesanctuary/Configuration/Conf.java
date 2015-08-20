@@ -181,10 +181,19 @@ public class Conf {
 		}
 	}
 	
-	public void del(String variable) {
+	public void removeChild(String variable) {
 		Conf conf = this.get(variable);
 		
 		if(conf != null) {
+			conf.getParentNode().getChildNodes().remove(conf);
+		}
+	}
+	
+	public void removeAllChildren(String[] variables) {
+		ArrayList<Conf> array = new ArrayList<Conf>();
+		this.getAllNodes(array, variables);
+		
+		for(Conf conf : array) {
 			conf.getParentNode().getChildNodes().remove(conf);
 		}
 	}
