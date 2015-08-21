@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List; 
 import java.util.Scanner;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -61,8 +62,8 @@ public class Conf {
 		this.desc = str;
 	}
 	
-	private void setParentNode(Conf c) {
-		this.parent = c;
+	private void setParentNode(Conf conf) {
+		this.parent = conf;
 	}
 	
 	public void setChildNodes(ArrayList<Conf> array) {
@@ -72,7 +73,7 @@ public class Conf {
 			conf.setParentNode(this);
 		}
 	}
-	
+		
 	@XmlElement(name="var")
 	public String getVar() {
 		return this.var;
@@ -233,4 +234,8 @@ public class Conf {
 		conf.setParentNode(this);
 		return conf;
 	}	
+	
+	public void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
+		this.setParentNode((Conf) parent);
+	}
 }
