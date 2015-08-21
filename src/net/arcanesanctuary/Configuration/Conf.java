@@ -50,22 +50,42 @@ public class Conf {
 		}		
 	}
 	
+	/**
+	 * Set this node's variable to <code>str</code>
+	 * @param str - The specified String
+	 */
 	public void setVar(String str) {
 		this.var = str;
 	}
 	
+	/**
+	 * Set this node's value to <code>str</code>
+	 * @param str
+	 */
 	public void setVal(String str) {
 		this.val = str;
 	}
 	
+	/**
+	 * Set this node's description to <code>str</code>
+	 * @param str
+	 */
 	public void setDesc(String str) {
 		this.desc = str;
 	}
 	
+	/**
+	 * Set this node's parent to <code>conf</code> but does not change the parent's child array
+	 * @param conf
+	 */
 	private void setParentNode(Conf conf) {
 		this.parent = conf;
 	}
 	
+	/**
+	 * Set this node's child array to <code>array</code>, including setting the parent node on each of the children
+	 * @param array
+	 */
 	public void setChildNodes(ArrayList<Conf> array) {
 		this.childNodes = array;
 		
@@ -74,43 +94,82 @@ public class Conf {
 		}
 	}
 		
+	/**
+	 * Return the node's name, the name of this variable
+	 * @return
+	 */
 	@XmlElement(name="var")
 	public String getVar() {
 		return this.var;
 	}
 	
+	/**
+	 * Return this node's value
+	 * @return
+	 */
 	@XmlElement(name = "val")
 	public String getVal() {
 		return this.val;
 	}	
 	
+	/**
+	 * Get this node's description
+	 * @return
+	 */
 	@XmlElement(name = "desc")
 	public String getDesc() {
 		return this.desc;
 	}
 	
+	/**
+	 * Get this node's parent node
+	 * @return
+	 */
 	@XmlTransient
 	public Conf getParentNode() {
 		return this.parent;
 	}
-		
+	
+	/**
+	 * Get this node's child node ArrayList 
+	 * @return ArrayList of <code>Conf</code> nodes
+	 */
 	@XmlElement(name = "node")
 	public ArrayList<Conf> getChildNodes() {
 		return this.childNodes;
 	}
 	
+	/**
+	 * Return the number of children in the child array
+	 * @return
+	 */
 	public int getChildCount() {
 		return this.childNodes.size();
 	}
 	
-	public Conf getChildAt(int i) {
-		return this.childNodes.get(i);
+	/**
+	 * Return the nodes at the specified <code>index</code> in this node's child array 
+	 * @param index
+	 * @return
+	 */
+	public Conf getChildAt(int index) {
+		return this.childNodes.get(index);
 	}
 	
+	/**
+	 * Return <code>true</code> if this node has children
+	 * @return
+	 */
 	public boolean hasChildNodes() {
 		return (! this.childNodes.isEmpty());
 	}
 	
+	/**
+	 * Return the value of the specified <code>variable</code>'s node. <br>
+	 * If the node's value is <code>null</code> or doesn't exist return ""
+	 * @param variable
+	 * @return
+	 */
 	public String get(String variable) {
 		String value = this.getNode(variable).getVal();
 		
@@ -121,6 +180,11 @@ public class Conf {
 		return "";
 	}
 	
+	/**
+	 * Return the specified node, if the node doesn't exist return <code>null</code>
+	 * @param variable
+	 * @return
+	 */
 	public Conf getNode(String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			
@@ -138,6 +202,10 @@ public class Conf {
 		return null;
 	}
 	
+	/**
+	 * Prompt the user for all <code>null</code> values in this node's child array
+	 * @param withDesc
+	 */
 	public void prompt(boolean withDesc) {
 		Scanner scan = new Scanner(System.in);
 		
