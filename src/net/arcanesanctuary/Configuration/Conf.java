@@ -132,7 +132,7 @@ public class Conf {
 		Scanner scan = new Scanner(System.in);
 		
 		ArrayList<Conf> array = new ArrayList<Conf>();		
-		this.getChildNulls(array);
+		this.getNulls(array);
 		
 		for(Conf conf : array) {
 			this.prompt(scan, withDesc, conf);
@@ -181,19 +181,19 @@ public class Conf {
 		}
 	}
 	
-	private void getChildNulls(ArrayList<Conf> array) {
+	private void getNulls(ArrayList<Conf> array) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVar() == null || conf.getVal().isEmpty()) {
 				array.add(conf);
 			}
 			
 			if(conf.hasChildNodes()) {
-				conf.getChildNulls(array);
+				conf.getNulls(array);
 			}
 		}
 	}
 	
-	public void setChildNulls(String[] variables) {
+	public void setNulls(String[] variables) {
 		ArrayList<Conf> array = new ArrayList<Conf>();
 		this.getChildNodes(array, variables);
 		
