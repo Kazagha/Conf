@@ -111,7 +111,17 @@ public class Conf {
 		return (! this.childNodes.isEmpty());
 	}
 	
-	public Conf get(String variable) {
+	public String get(String variable) {
+		String value = this.getNode(variable).getVal();
+		
+		if(value != null) {
+			return value;
+		}
+		
+		return "";
+	}
+	
+	public Conf getNode(String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			
 			if(conf.getVar().equalsIgnoreCase(variable)) {
@@ -119,7 +129,7 @@ public class Conf {
 			}
 			
 			if(conf.hasChildNodes()) {
-				Conf childNode = conf.get(variable);
+				Conf childNode = conf.getNode(variable);
 				if(childNode != null) {
 					return childNode;
 				}
@@ -203,7 +213,7 @@ public class Conf {
 	}
 	
 	public void removeChild(String variable) {
-		Conf conf = this.get(variable);
+		Conf conf = this.getNode(variable);
 		
 		if(conf != null) {
 			conf.getParentNode().getChildNodes().remove(conf);
@@ -220,7 +230,7 @@ public class Conf {
 	}
 	
 	public boolean contains(String variable) {
-		return (this.get(variable)) != null;
+		return (this.getNode(variable)) != null;
 	}
 	
 	public void appendChild(Conf conf) {
@@ -234,7 +244,7 @@ public class Conf {
 		}
 	}
 	
-	public Conf newChild() {
+	public Conf appendChild() {
 		Conf conf = new Conf();		
 		this.childNodes.add(conf);
 		conf.setParentNode(this);
