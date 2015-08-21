@@ -154,7 +154,7 @@ public class Conf {
 
 	private void prompt(Scanner scan, boolean withDesc, Conf conf) {
 		
-		if(withDesc == true && !conf.getDesc().isEmpty()) {
+		if(withDesc == true && conf.getDesc() != null && ! conf.getDesc().isEmpty()) {
 			System.out.format("%s: ", conf.getDesc());
 		} else {
 			System.out.format("%s: ", conf.getVar());
@@ -183,7 +183,7 @@ public class Conf {
 	
 	private void getNulls(ArrayList<Conf> array) {
 		for(Conf conf : this.getChildNodes()) {
-			if(conf.getVar() == null || conf.getVal().isEmpty()) {
+			if(conf.getVal() == null || conf.getVal().isEmpty()) {
 				array.add(conf);
 			}
 			
@@ -226,6 +226,12 @@ public class Conf {
 	public void appendChild(Conf conf) {
 		this.childNodes.add(conf);
 		conf.setParentNode(this);
+	}
+	
+	public void appendChildren(String[] variables) {
+		for(String var : variables) {
+			this.appendChild(new Conf(var, null, null));
+		}
 	}
 	
 	public Conf newChild() {
