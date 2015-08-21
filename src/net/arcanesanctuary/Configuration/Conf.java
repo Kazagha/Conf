@@ -23,9 +23,9 @@ public class Conf {
 	private Conf parent;
 	
 	public Conf() {
-		this.var = "";
-		this.val = "";
-		this.desc = "";
+		this.var = null;
+		this.val = null;
+		this.desc = null;
 		this.childNodes = new ArrayList<Conf>();
 	}
 	
@@ -157,7 +157,7 @@ public class Conf {
 		if(withDesc == true && !conf.getDesc().isEmpty()) {
 			System.out.format("%s: ", conf.getDesc());
 		} else {
-			System.out.format("%s:", conf.getVar());
+			System.out.format("%s: ", conf.getVar());
 		}
 		
 		conf.setVal(scan.nextLine());	
