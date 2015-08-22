@@ -203,7 +203,8 @@ public class Conf {
 	}
 	
 	/**
-	 * Prompt the user for all <code>null</code> values in this node's child array
+	 * Prompt the user for all <code>null</code> values in this node's child array.
+	 * If <code>withDesc</code> is true prompt with the node's description instead of the name
 	 * @param withDesc
 	 */
 	public void prompt(boolean withDesc) {
@@ -217,6 +218,13 @@ public class Conf {
 		}
 	}
 	
+	/**
+	 * Prompt the user for the specified <code>variables</code>, if <code>withDesc</code> is true
+	 * prompt with the node's description instead of the name
+	 * 
+	 * @param withDesc
+	 * @param variables
+	 */
 	public void prompt(boolean withDesc, String[] variables) {
 		Scanner scan = new Scanner(System.in);
 		
@@ -230,6 +238,12 @@ public class Conf {
 		//TODO: Close the Scanner without also closing System.in as this will prevent further input 
 	}
 
+	/**
+	 * Prompt the user to enter the vaule for <code>conf</code> using the <code>scan</code> object
+	 * @param scan - The <code>Scanner</code> object
+	 * @param withDesc - <code>true</code> to prompt with description
+	 * @param conf - The node that will be set
+	 */
 	private void prompt(Scanner scan, boolean withDesc, Conf conf) {
 		
 		if(withDesc == true && conf.getDesc() != null && ! conf.getDesc().isEmpty()) {
@@ -241,12 +255,22 @@ public class Conf {
 		conf.setVal(scan.nextLine());	
 	}
 	
+	/**
+	 * Add nodes to <code>array</code> that match the names in <code>variables</code>
+	 * @param array
+	 * @param variables
+	 */
 	public void getChildNodes(ArrayList<Conf> array, String[] variables) {
 		for(String var : variables) {
 			this.getChildNodes(array, var);
 		}
 	}
 	
+	/**
+	 * Add nodes to <code>array</code> where the node name equals <code>variable</code> 
+	 * @param array
+	 * @param variable
+	 */
 	private void getChildNodes(ArrayList<Conf> array, String variable) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVar().equalsIgnoreCase(variable)) {
@@ -259,6 +283,10 @@ public class Conf {
 		}
 	}
 	
+	/**
+	 * Return all the nodes with <code>null</code> values
+	 * @param array
+	 */
 	private void getNulls(ArrayList<Conf> array) {
 		for(Conf conf : this.getChildNodes()) {
 			if(conf.getVal() == null || conf.getVal().isEmpty()) {
@@ -271,6 +299,10 @@ public class Conf {
 		}
 	}
 	
+	/**
+	 * Set the value of the specified <code>variables</code> to <code>null</code> 
+	 * @param variables
+	 */
 	public void setNulls(String[] variables) {
 		ArrayList<Conf> array = new ArrayList<Conf>();
 		this.getChildNodes(array, variables);
@@ -280,6 +312,10 @@ public class Conf {
 		}
 	}
 	
+	/**
+	 * Remove the specified <code>variable</code> node
+	 * @param variable
+	 */
 	public void removeChild(String variable) {
 		Conf conf = this.getNode(variable);
 		
@@ -288,7 +324,11 @@ public class Conf {
 		}
 	}
 	
-	public void removeAllChildren(String[] variables) {
+	/**
+	 * Remove all nodes listed in <code>variables</code> 
+	 * @param variables
+	 */
+	public void removeChildren(String[] variables) {
 		ArrayList<Conf> array = new ArrayList<Conf>();
 		this.getChildNodes(array, variables);
 		
@@ -297,21 +337,38 @@ public class Conf {
 		}
 	}
 	
+	/**
+	 * Return <code>true</code> if this node's children contains a <code>variable</code> node
+	 * @param variable
+	 * @return
+	 */
 	public boolean contains(String variable) {
 		return (this.getNode(variable)) != null;
 	}
 	
-	public void appendChild(Conf conf) {
-		this.childNodes.add(conf);
-		conf.setParentNode(this);
-	}
-	
+	/**
+	 * Append child nodes for each <code>String</code> in <code>variables</code> to this node 
+	 * @param variables
+	 */
 	public void appendChildren(String[] variables) {
 		for(String var : variables) {
 			this.appendChild(new Conf(var, null, null));
 		}
 	}
 	
+	/**
+	 * Append the <code>conf</code> to this node's children array
+	 * @param conf
+	 */
+	public void appendChild(Conf conf) {
+		this.childNodes.add(conf);
+		conf.setParentNode(this);
+	}
+	
+	/**
+	 * Append a new child to this node's children array
+	 * @return
+	 */
 	public Conf appendChild() {
 		Conf conf = new Conf();		
 		this.childNodes.add(conf);
@@ -319,6 +376,11 @@ public class Conf {
 		return conf;
 	}	
 	
+	/**
+	 * Set the <code>parent</code> on this node, once it has been loaded from file
+	 * @param unmarshaller
+	 * @param parent
+	 */
 	public void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
 		this.setParentNode((Conf) parent);
 	}
