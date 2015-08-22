@@ -36,6 +36,13 @@ public class Conf {
 		this.childNodes = new ArrayList<Conf>();
 	}
 	
+	public Conf(Conf conf) {
+		this.var = conf.getVar();
+		this.val = conf.getVal();
+		this.desc = conf.getDesc();
+		this.childNodes = new ArrayList<Conf>();
+	}
+	
 	public void set(String variable, String description, String value) {
 		if(variable != null) {
 			this.setVar(variable);
@@ -357,7 +364,7 @@ public class Conf {
 	}
 	
 	/**
-	 * Append the <code>conf</code> to this node's children array
+	 * Append <code>conf</code> to this node's children array
 	 * @param conf
 	 */
 	public void appendChild(Conf conf) {
