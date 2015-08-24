@@ -22,6 +22,9 @@ public class Conf {
 	private ArrayList<Conf> childNodes;
 	private Conf parent;
 	
+	private static Scanner scan;
+	private boolean scanInstantiated = false;
+	
 	public Conf() {
 		this.var = null;
 		this.val = null;
@@ -215,7 +218,10 @@ public class Conf {
 	 * @param withDesc
 	 */
 	public void prompt(boolean withDesc) {
-		Scanner scan = new Scanner(System.in);
+		if(! scanInstantiated) {
+			scan = new Scanner(System.in);
+			scanInstantiated = true;
+		}
 		
 		ArrayList<Conf> array = new ArrayList<Conf>();		
 		this.getNulls(array);
@@ -223,6 +229,8 @@ public class Conf {
 		for(Conf conf : array) {
 			this.prompt(scan, withDesc, conf);
 		}
+		
+		//TODO: Close the Scanner without also closing System.in as this will prevent further input 
 	}
 	
 	/**
@@ -233,7 +241,10 @@ public class Conf {
 	 * @param variables
 	 */
 	public void prompt(boolean withDesc, String[] variables) {
-		Scanner scan = new Scanner(System.in);
+		if(! scanInstantiated) {
+			scan = new Scanner(System.in);
+			scanInstantiated = true;
+		}
 		
 		ArrayList<Conf> array = new ArrayList<Conf>();		
 		this.getChildNodes(array, variables);
