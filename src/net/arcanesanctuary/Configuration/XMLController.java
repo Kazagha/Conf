@@ -19,120 +19,33 @@ import org.xml.sax.SAXException;
 
 public class XMLController {
 	
-	File filename;
+	File fileName;
 	Document doc;
 
-	public XMLController(File f) {
-		filename = f;
+	public XMLController(File file) {
+		this.setFileName(file);
 	}
 	
-	public void save(ConfNode cn) {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = null;
-		TransformerFactory tFactory = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		
-		try {
-			
-			docBuilder = docFactory.newDocumentBuilder();
-			transformer = tFactory.newTransformer();			
-		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","4");
-		
-			doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement(cn.conf().getVar());
-			doc.appendChild(rootElement);
-			
-			this.buildDocument(rootElement, cn);
-			
-			DOMSource source = new DOMSource(doc);
-			
-			StreamResult result = new StreamResult(this.filename);
-				
-			transformer.transform(source, result);
-			
-		} catch (TransformerException e) {
-			System.out.format("Transformer error%n %s%n%s", e.getMessage());
-			e.printStackTrace();
-		} catch(ParserConfigurationException e) {
-			System.out.format("Parser error%n %s%n%s", e.getMessage());
-			e.printStackTrace();
-		}
-	}
-	
-	private void buildDocument(Element element, ConfNode node) {
-		for(int i = 0; i < node.getChildCount(); i++) {
-			ConfNode cn = ((ConfNode) node.getChildAt(i));
-			ConfData cd = ((ConfData) cn.conf());
-			
-			Element e = doc.createElement(cd.getVar());
-			e.appendChild(doc.createTextNode(cd.getVal()));			
-			element.appendChild(e);
-			
-			if(! cd.isDescNull()) {
-				Attr desc = doc.createAttribute("desc");
-				desc.setValue(cd.getDesc());
-				e.setAttributeNode(desc);
-			}
-			
-			if(cn.getChildCount() > 0) {
-				buildDocument(e, cn);
+	public void setFileName(File file) {
+		if(! fileName.exists()) {
+			try {
+				fileName.createNewFile();
+			} catch (IOException e) {
+				System.out.format("Cannot create file in the following location%n%s%n",
+						fileName.toString());
+				e.printStackTrace();
 			}
 		}
+		
+		this.fileName = file;
 	}
 	
-	public ConfNode load() {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		ConfNode rootNode = new ConfNode("Test Node", null, null);
+	public void save(Conf conf) {
 		
-		try {
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse(filename);
-			
-			NodeList list = doc.getChildNodes().item(0).getChildNodes();
-			Node root = doc.getChildNodes().item(0);
-			
-			for(int i = 0; i < list.getLength(); i++) {
-				Node n = list.item(i);
-				if(n.getNodeType() == Node.ELEMENT_NODE) {
-					System.out.format("%n%s - %s%n", n.getNodeName(), n.getNodeValue());
-					getText(n);
-				}
-			}
-		
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
-		
-		return rootNode;
 	}
 	
-	
-	private void getText(Node node) {
-		NodeList list = node.getChildNodes();
-		
-		for(int i = 0; i < list.getLength(); i++) {
-			Node n = list.item(i);
-			//System.out.format("Node: %s%n", n.getNodeName());
-			
-			switch (n.getNodeType()) {
-			case Node.ATTRIBUTE_NODE:
-				System.out.format("    Att Node: %s%n", n.getNodeValue());
-				break;
-			case Node.ELEMENT_NODE:
-				System.out.format("    Ele Node: %s%n", n.getNodeValue());
-				break;			
-			case Node.TEXT_NODE: 
-			System.out.format("    Text Node: %s%n", n.getNodeValue());
-			break;
-			}
-
-			
-			getText(n);
-		}
+	public Conf load() {
+		return new Conf();
 	}
+	
 }
