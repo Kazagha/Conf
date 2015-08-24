@@ -7,16 +7,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class XMLController {
 	
@@ -51,7 +41,7 @@ public class XMLController {
 			fileName.createNewFile();
 		} catch (IOException e) {
 			System.out.format("Cannot create file in the following location%n%s%n",
-					fileName.toString());
+					fileName.toPath().toString());
 			e.printStackTrace();
 		}
 		
@@ -59,7 +49,14 @@ public class XMLController {
 	}
 	
 	public void save(Conf conf) {
+		checkFileName(fileName);
 		
+		try {
+			marshaller.marshal(conf, fileName);
+		} catch (JAXBException e) {
+			System.out.format("Error saving to file: %s", fileName.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	public Conf load() {
