@@ -32,7 +32,7 @@ public class XMLController {
 		}
 	}
 	
-	public boolean checkFileName(File file) {
+	private boolean checkFileName(File file) {
 		if(fileName.exists()) {
 			return true;
 		}
