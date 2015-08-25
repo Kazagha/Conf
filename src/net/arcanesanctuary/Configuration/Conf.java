@@ -13,12 +13,13 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement(name = "conf")
-@XmlType(propOrder={ "var", "desc", "val", "childNodes" })
+@XmlType(propOrder={ "var", "desc", "val", "mask", "childNodes" })
 public class Conf {
 
 	private String var;
 	private String val;
 	private String desc;
+	private Boolean mask;
 	private ArrayList<Conf> childNodes;
 	private Conf parent;
 	
@@ -85,6 +86,14 @@ public class Conf {
 	}
 	
 	/**
+	 * Mask this node's value during input
+	 * @param isMasked
+	 */
+	public void setMask(Boolean isMasked) {
+		this.mask = isMasked;
+	}
+	
+	/**
 	 * Set this node's parent to <code>conf</code> but does not change the parent's child array
 	 * @param conf
 	 */
@@ -129,6 +138,18 @@ public class Conf {
 	@XmlElement(name = "desc")
 	public String getDesc() {
 		return this.desc;
+	}
+	
+	/**
+	 * Return <code>true</code> is this node's value is masked, otherwise return <code>null</code>
+	 * @return
+	 */
+	public Boolean getMask() {
+		if(this.mask != null && this.mask == true){
+			return true;
+		} 
+		
+		return null;
 	}
 	
 	/**
