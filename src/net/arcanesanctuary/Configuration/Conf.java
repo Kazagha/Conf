@@ -373,7 +373,7 @@ public class Conf {
 	 * Set the value of the specified <code>variables</code> to <code>null</code> 
 	 * @param variables
 	 */
-	public void setNulls(String[] variables) {
+	public void setNullValues(String[] variables) {
 		ArrayList<Conf> array = new ArrayList<Conf>();
 		this.getChildNodes(array, variables);
 		
