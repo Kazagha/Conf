@@ -141,8 +141,10 @@ public class Conf {
 	}
 	
 	/**
-	 * Return <code>true</code> is this node's value is masked, otherwise return <code>null</code>
-	 * @return
+	 * Return <code>true</code> if this node's value is masked, otherwise return <code>null</code><br>
+	 * A node without masking (<code>false</code>) has no significance therefore <code>null</code> is returned instead
+	 * @return Boolean
+	 * @see isMarked
 	 */
 	public Boolean getMask() {
 		if(this.mask != null && this.mask == true){
@@ -150,6 +152,19 @@ public class Conf {
 		} 
 		
 		return null;
+	}
+	
+	/**
+	 * Return <code>true</code> if this node's value is masked, otherwise return <code>false</code>
+	 * @return
+	 * @see getMask
+	 */
+	public boolean isMasked() {
+		if(this.mask != null) {
+			return this.mask;
+		}
+		
+		return false;
 	}
 	
 	/**
