@@ -162,6 +162,22 @@ public class Conf {
 	}
 	
 	/**
+	 * Get the root node by finding the parent of this node and repeating 
+	 * @return Conf - The root node
+	 */
+	public Conf getRootNode() {
+		Conf conf = this;
+		Conf next = this.getParentNode();
+		
+		while(next != null) {
+			conf = next;
+			next = next.getParentNode();
+		}		
+		
+		return conf;
+	}
+	
+	/**
 	 * Get this node's child node ArrayList 
 	 * @return ArrayList of <code>Conf</code> nodes
 	 */
