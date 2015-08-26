@@ -8,7 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.Marshaller;
 
-public class XMLController {
+public class JAXBController {
 	
 	File fileName;
 	
@@ -16,7 +16,7 @@ public class XMLController {
 	private Unmarshaller unmarshaller = null;
 	private Marshaller marshaller = null;
 
-	public XMLController(File file) {
+	public JAXBController(File file) {
 		this.fileName = file;
 		this.setUp();
 	}
