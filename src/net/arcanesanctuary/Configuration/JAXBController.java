@@ -10,14 +10,14 @@ import javax.xml.bind.Marshaller;
 
 public class JAXBController {
 	
-	File fileName;
+	private File file;
 	
 	private JAXBContext jaxbContext; 
 	private Unmarshaller unmarshaller = null;
 	private Marshaller marshaller = null;
 
 	public JAXBController(File file) {
-		this.fileName = file;
+		this.file = file;
 		this.setUp();
 	}
 	
@@ -32,39 +32,43 @@ public class JAXBController {
 		}
 	}
 	
-	private boolean checkFileName(File file) {
-		if(fileName.exists()) {
+	private boolean checkfile(File file) {
+		if(file.exists()) {
 			return true;
 		}
 		
 		try {
-			fileName.createNewFile();
+			file.createNewFile();
 		} catch (IOException e) {
 			System.out.format("Cannot create file in the following location%n%s%n",
-					fileName.toPath().toString());
+					file.toPath().toString());
 			e.printStackTrace();
 		}
 		
 		return false;
 	}
 	
+	public void setfile(File file) {
+		this.file = file;
+	}
+	
 	public void save(Conf conf) {
-		checkFileName(fileName);
+		checkfile(file);
 		
 		try {
-			marshaller.marshal(conf, fileName);
+			marshaller.marshal(conf, file);
 		} catch (JAXBException e) {
-			System.out.format("Error saving to file: %s", fileName.toString());
+			System.out.format("Error saving to file: %s", file.toString());
 			e.printStackTrace();
 		}
 	}
 	
 	public Conf load() {
-		if(checkFileName(fileName)) {
+		if(checkfile(file)) {
 			try {
-				return (Conf) unmarshaller.unmarshal(fileName);
+				return (Conf) unmarshaller.unmarshal(file);
 			} catch (JAXBException e) {
-				System.out.format("Error loading file: %s", fileName.toString());
+				System.out.format("Error loading file: %s", file.toString());
 				e.printStackTrace();
 			}
 		}
