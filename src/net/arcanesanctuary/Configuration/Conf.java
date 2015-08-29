@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List; 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -323,6 +326,37 @@ public class Conf {
 		}
 		
 		conf.setVal(scan.nextLine());	
+	}
+	
+	public void promptJOptionPane(String title, String[] variables) {
+		
+		// Fetch all the specified variables
+		ArrayList<Conf> array = new ArrayList<Conf>();
+		this.getChildNodes(array, variables);
+				
+		// Create a list of labels and JTextField/JPasswordField boxes
+		ArrayList<Object> menu = new ArrayList<Object>();
+		for(Conf conf : array) {
+			menu.add(conf.getVar());
+						
+			if(conf.isMasked()) {
+				menu.add(new JPasswordField(conf.getVal()));
+			} else {
+				menu.add(new JTextField(conf.getVal()));
+			}
+		}
+		
+		// Prompt the user for input
+		JOptionPane.showConfirmDialog(null, menu.toArray(), title, JOptionPane.OK_CANCEL_OPTION);
+		
+		// Transfer the input back into the Conf objects
+		int count = 0;
+		for(Object obj : menu) {
+			if(obj instanceof JTextField) {				
+				array.get(0).setVal(((JTextField) obj).getText());
+				count++;
+			}
+		}
 	}
 	
 	/**
