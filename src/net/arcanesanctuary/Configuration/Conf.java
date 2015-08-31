@@ -353,7 +353,7 @@ public class Conf {
 		int count = 0;
 		for(Object obj : menu) {
 			if(obj instanceof JTextField) {				
-				array.get(0).setVal(((JTextField) obj).getText());
+				array.get(count).setVal(((JTextField) obj).getText());
 				count++;
 			}
 		}
