@@ -26,6 +26,7 @@ public class JAXBController {
 			jaxbContext = JAXBContext.newInstance(Conf.class);		
 			unmarshaller = jaxbContext.createUnmarshaller();
 			marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		} catch (JAXBException e) {
 			System.out.format("Error configuring JAXB / Marshaller%n");
 			e.printStackTrace();
