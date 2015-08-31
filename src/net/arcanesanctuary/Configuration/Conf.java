@@ -312,7 +312,7 @@ public class Conf {
 	}
 
 	/**
-	 * Prompt the user to enter the vaule for <code>conf</code> using the <code>scan</code> object
+	 * Prompt the user to enter the value for <code>conf</code> using the <code>scan</code> object
 	 * @param scan - The <code>Scanner</code> object
 	 * @param withDesc - <code>true</code> to prompt with description
 	 * @param conf - The node that will be set
@@ -328,6 +328,12 @@ public class Conf {
 		conf.setVal(scan.nextLine());	
 	}
 	
+	/**
+	 * Prompt the user with a <code>JOptionPane</code> for the specified <code>variables</code>.  
+	 * Where the title of the dialog will be <code>title</code> 
+	 * @param title - The name of the dialog
+	 * @param variables - The variables to prompt for
+	 */
 	public void promptJOptionPane(String title, String[] variables) {
 		
 		// Fetch all the specified variables
